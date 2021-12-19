@@ -1,0 +1,8 @@
+﻿src/FrontModule/.vs
+src/FrontModule/__vm
+src/FrontModule/Release
+src/FrontModule/Debug
+src/RearMainModule/.vs
+src/RearMainModule/__vm
+src/RearMainModule/Release
+src/RearMainModule/Debug

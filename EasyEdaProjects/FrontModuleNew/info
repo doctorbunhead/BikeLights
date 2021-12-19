@@ -1,0 +1,144 @@
+{
+  "uuid": "c334dcec5ec9cca9f7f32985e1434e44",
+  "path": "Offline/FrontModuleNew",
+  "name": "FrontModuleNew",
+  "content": "",
+  "created_at": "2021-11-06 17:10:22",
+  "updated_at": "2021-12-11 15:12:00",
+  "stick": "",
+  "documents": [
+    {
+      "uuid": "1eeb9db0313ad85386b2add21ec9ed3d",
+      "title": "FrontModule/FrontModule",
+      "description": "",
+      "docType": "1",
+      "master": "",
+      "thumb": "/images/thumb-default.png",
+      "components": {
+        "b8303600153b4eb1ae16979a327afb9f": 1,
+        "3d81358d1cf644cfbc260df0c855f95f": 5,
+        "49782afddc134d179044a2f47ca5cd79": 1,
+        "6a469063902c4d47b9003ece9d1d25f0": 1,
+        "6b4bb90fc489b372aba96d55a970a971": 1
+      },
+      "BOM": [
+        [
+          "Value",
+          "Quantity",
+          "Package",
+          "Components",
+          "CustomPara"
+        ],
+        [
+          "HC12_MODULE",
+          1,
+          "HC12",
+          "1",
+          {
+            "BOM_Manufacturer Part": "",
+            "puuid": "f59c4d74c9c142d0931de871330b7a80",
+            "uuid": "b8303600153b4eb1ae16979a327afb9f"
+          }
+        ],
+        [
+          "1000uF",
+          1,
+          "CP_RADIAL_D8.0MM_P3.50MM",
+          "C1",
+          {
+            "puuid": "427b198b58d04b2a9d7ee0adb963c919",
+            "uuid": ""
+          }
+        ],
+        [
+          "100nF",
+          1,
+          "C0805",
+          "C3",
+          {
+            "BOM_Supplier": "LCSC",
+            "BOM_Manufacturer": "MuRata",
+            "BOM_Manufacturer Part": "GRM21BR72A104KAC4L",
+            "BOM_Supplier Part": "C86044",
+            "puuid": "2ee8eb13a0124a108e622ce40c0c25a8",
+            "uuid": "6b4bb90fc489b372aba96d55a970a971"
+          }
+        ],
+        [
+          "MKDS3/2-5.08",
+          5,
+          "CONN-TH_MKDS3-2-5.08",
+          "CN1,CN2,CN3,CN4,CN5",
+          {
+            "BOM_Supplier": "LCSC",
+            "BOM_Manufacturer": "Phoenix Contact",
+            "BOM_Manufacturer Part": "MKDS3/2-5.08",
+            "BOM_Supplier Part": "C89120",
+            "BOM_JLCPCB Part Class": "Extended Part",
+            "puuid": "e33f49e2b3194cdf8041c0deed8e9f8f",
+            "uuid": "3d81358d1cf644cfbc260df0c855f95f"
+          }
+        ],
+        [
+          "1N4001",
+          1,
+          "DO-41_BD2.4-L4.7-P8.70-D0.9-RD",
+          "D1",
+          {
+            "BOM_Supplier": "LCSC",
+            "BOM_Manufacturer": "LRC",
+            "BOM_Manufacturer Part": "1N4001",
+            "BOM_Supplier Part": "C82804",
+            "puuid": "c2803222ad4b48fb94db0de548a6280a",
+            "uuid": "6a469063902c4d47b9003ece9d1d25f0"
+          }
+        ],
+        [
+          "300R",
+          2,
+          "R_0805",
+          "R1,R2",
+          {
+            "puuid": "f5f9872c4c40453096226f8cd1a9027d",
+            "uuid": ""
+          }
+        ]
+      ],
+      "updateTime": 1639235479,
+      "createTime": 1636218622,
+      "histories": [],
+      "created_at": "2021-11-06 17:10:22",
+      "updated_at": "2021-12-11 15:11:19"
+    },
+    {
+      "uuid": "df7ce1d9b6a4a55173ecc1eb6b602485",
+      "puuid": "c334dcec5ec9cca9f7f32985e1434e44",
+      "title": "PCB_FrontModuleNew",
+      "filename": "PCB_FrontModuleNew.json",
+      "description": "",
+      "docType": "3",
+      "master": "",
+      "thumb": "/images/thumb-default.png",
+      "components": {
+        "2ee8eb13a0124a108e622ce40c0c25a8": 1,
+        "f59c4d74c9c142d0931de871330b7a80": 1,
+        "f5f9872c4c40453096226f8cd1a9027d": 2,
+        "c2803222ad4b48fb94db0de548a6280a": 1,
+        "e33f49e2b3194cdf8041c0deed8e9f8f": 5,
+        "03308f92686b41238b626659d5c49e4f": 1,
+        "427b198b58d04b2a9d7ee0adb963c919": 1
+      },
+      "BOM": [],
+      "updateTime": 1639235520,
+      "createTime": 1636221058,
+      "histories": [],
+      "created_at": "2021-11-06 17:50:58",
+      "updated_at": "2021-12-11 15:12:00"
+    }
+  ],
+  "sort": [],
+  "title": "FrontModuleNew",
+  "foldername": "FrontModuleNew",
+  "schfilename": "FrontModuleNew.json",
+  "schfilemtime": 1639235479751
+}
