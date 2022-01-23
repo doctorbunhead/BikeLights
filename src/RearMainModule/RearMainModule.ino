@@ -3,6 +3,7 @@
 #include <I2Cdev.h>
 #include <MPU6050_6Axis_MotionApps20.h>
 #include <Adafruit_NeoPixel.h>
+#include <eeprom.h>
 //#include "MPU6050.h" // not necessary if using MotionApps include file
 
 // Arduino Wire library is required if I2Cdev I2CDEV_ARDUINO_WIRE implementation
@@ -35,12 +36,15 @@ bool brakeTrigOnSent = false;
 bool brakeTrigOffSent = false;
 bool brakeOnSent = false;
 bool brakeOffSent = false;
-bool ledState = false;
+//bool ledState = false;
 bool blink = false;
+bool disableBrakeLightsForTesting = false;
 unsigned long microsBlink = 0;
 
-int16_t thresholdValue = 600; //accZ brake threshold
+int16_t thresholdValue = 1800; //accZ brake threshold
 unsigned long brakeTime = 250000; //time for accZ to be high to trigger brake
+const int thresholdAddress = 0;
+const int brakeTimeAddress = 10;
 
 #define LEFT_REAR 5
 #define RIGHT_REAR 6
@@ -74,7 +78,11 @@ float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gra
 
 String inputString = "";
 
-SoftwareSerial bluetooth = SoftwareSerial(14, 15);
+//Board V1.0 config
+SoftwareSerial bluetooth = SoftwareSerial(10, 16);
+
+//Board V1.2 config
+//SoftwareSerial bluetooth = SoftwareSerial(14, 15);
 
 // ================================================================
 // ===               INTERRUPT DETECTION ROUTINE                ===
@@ -88,11 +96,51 @@ void dmpDataReady() {
 
 
 void setup() {
+	//Setup and gorund unused pins
+	pinMode(4, OUTPUT);
+	digitalWrite(4, LOW);
+	pinMode(8, OUTPUT);
+	digitalWrite(8, LOW);
+	pinMode(9, OUTPUT);
+	digitalWrite(9, LOW);
+	//Board V1.0 config
+	pinMode(14, OUTPUT);
+	digitalWrite(14, LOW);
+	pinMode(15, OUTPUT);
+	digitalWrite(15, LOW);
+	//Board V1.2 config
+	/*pinMode(10, OUTPUT);
+	digitalWrite(10, LOW);
+	pinMode(16, OUTPUT);
+	digitalWrite(16, LOW);*/
+	pinMode(A0, OUTPUT);
+	analogWrite(A0, 0);
+	pinMode(A1, OUTPUT);
+	analogWrite(A1, 0);
+	pinMode(A2, OUTPUT);
+	analogWrite(A2, 0);
+	pinMode(A3, OUTPUT);
+	analogWrite(A3, 0);
+	
 	Serial1.begin(2400); //RF Serial
 	bluetooth.begin(38400);
 	inputString.reserve(200);
-	pinMode(9, OUTPUT);
-	digitalWrite(9, HIGH);
+	EEPROM.get(thresholdAddress, thresholdValue);
+	EEPROM.get(brakeTimeAddress, brakeTime);
+
+	if (thresholdValue > 32000 || thresholdValue < 100) {
+		thresholdValue = 1800;
+		EEPROM.update(thresholdAddress, thresholdValue);
+	}
+	
+	if (brakeTime > 2000000 || brakeTime < 25000) {
+		brakeTime = 250000;
+		EEPROM.update(brakeTimeAddress, brakeTime);
+	}
+
+	
+	
+
 	// join I2C bus (I2Cdev library doesn't do this automatically)
 #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
 	Wire.begin();
@@ -316,59 +364,51 @@ void BluetoothRoutine() {//// blink LED to indicate activity
 	if (inputString == "B") {
 		btConnected = true;
 		bluetooth.println("Bluetooth Connected\t\t\t\t\t\t\t\t\t\t\t\t\t\t");
-		ledState = !ledState;
-		digitalWrite(13, ledState);
 	}
 
 	if (inputString == "N") {
 		btConnected = false;
 		bluetooth.println("Bluetooth Disconnected\t\t\t\t\t\t\t\t\t\t\t\t\t\t");
-		ledState = !ledState;
-		digitalWrite(13, ledState);
 	}
 
 	//Increase brakeTime Value
 	if (inputString == "Q") {
 		brakeTime += 25000;
 		if (brakeTime > 2000000) brakeTime = 2000000;
+		EEPROM.update(brakeTimeAddress, brakeTime);
 		bluetooth.print("brakeTime value inc to ");
 		bluetooth.print(brakeTime, DEC);
 		bluetooth.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t");
-		ledState = !ledState;
-		digitalWrite(13, ledState);
 	}
 
 	//decrease brakeTime Value
 	if (inputString == "A") {
 		brakeTime -= 25000;
 		if (brakeTime < 25000) brakeTime = 25000;
+		EEPROM.update(brakeTimeAddress, brakeTime);
 		bluetooth.print("brakeTime value dec to ");
 		bluetooth.print(brakeTime, DEC);
 		bluetooth.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t");
-		ledState = !ledState;
-		digitalWrite(13, ledState);
 	}
 
 	//Increase Threshold
 	if (inputString == "W") {
 		thresholdValue += 100;
 		if (thresholdValue > 32000) thresholdValue = 32000;
+		EEPROM.update(thresholdAddress, thresholdValue);
 		bluetooth.print("Threshold increased to ");
 		bluetooth.print(thresholdValue, DEC);
 		bluetooth.println("\t\t");
-		ledState = !ledState;
-		digitalWrite(13, ledState);
 	}
 
 	//Decrease thresholdValue Comparison
 	if (inputString == "S") {
 		thresholdValue -= 100;
 		if (thresholdValue < 100) thresholdValue = 100;
+		EEPROM.update(thresholdAddress, thresholdValue);
 		bluetooth.print("Threshold decreased to ");
 		bluetooth.print(thresholdValue, DEC);
 		bluetooth.println("\t\t");
-		ledState = !ledState;
-		digitalWrite(13, ledState);
 	}
 
 	//Logging On
@@ -377,16 +417,24 @@ void BluetoothRoutine() {//// blink LED to indicate activity
 		bluetooth.println("Logging On\t\t");
 		//bluetooth.println("accX\taccY\taccZ\tgyrox\tgyroY\tgyroZ\t\tRoll\tgyroXAngle\tCompXAngle\tkalXAngle\t\tpitch\tgyroYAngle\tcompAngleY\tkalAngleY\ttemp");
 		bluetooth.println("aworld-x\taworld-y\taworld-z");
-		ledState = !ledState;
-		digitalWrite(13, ledState);
 	}
 
 	//Logging Off
 	if (inputString == "F") {
 		logging = false;
 		bluetooth.println("Logging Off\t\t");
-		ledState = !ledState;
-		digitalWrite(13, ledState);
+	}
+	
+	//Brake Testing On
+	if (inputString == "E") {
+		disableBrakeLightsForTesting = true;
+		bluetooth.println("Brake Light Disabled\t\t");
+	}
+
+	//Brake Testing Off
+	if (inputString == "D") {
+		disableBrakeLightsForTesting = false;
+		bluetooth.println("Brake Light Enabled\t\t");
 	}
 	inputString = "";
 }
@@ -424,7 +472,7 @@ void UpdatePixels() {
 			indicating = false;
 		}
 	}
-	if (strStatus == "q" && brakeOn) { //indicate left on , brake on
+	if (strStatus == "q" && brakeOn && !disableBrakeLightsForTesting) { //indicate left on , brake on
 		if (indicating == false) {
 			//colorWipe(leftRear.Color(255, 60, 0), 10, leftRear);
 			for (uint8_t i = 0; i < 36; i++) {
@@ -488,7 +536,7 @@ void UpdatePixels() {
 			indicating = false;
 		}
 	}
-	if (strStatus == "a" && brakeOn) { //indicate right on, brake on
+	if (strStatus == "a" && brakeOn && !disableBrakeLightsForTesting) { //indicate right on, brake on
 		if (indicating == false) {
 			//colorWipe(leftRear.Color(255, 0, 0), 0, leftRear);
 			for (uint8_t i = 0; i < 36; i++) {
@@ -556,7 +604,7 @@ void UpdatePixels() {
 		leftRear.show();
 		rightRear.show();
 	}
-	if (strStatus == "z" && brakeOn) {
+	if (strStatus == "z" && brakeOn && !disableBrakeLightsForTesting) {
 		//colorWipe(leftRear.Color(255, 0, 0), 0, leftRear);
 		for (uint8_t i = 0; i < 36; i++) {
 			leftRear.setPixelColor(i, leftRear.Color(255, 0, 0));
