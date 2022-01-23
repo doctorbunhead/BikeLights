@@ -1,11 +1,11 @@
 #include <Adafruit_NeoPixel.h>
 
-#define LEFT_FRONT 7
-#define RIGHT_FRONT 8
 #define LEFT_BUTTON 3
 #define RIGHT_BUTTON 4
 #define LEFT_BUTTON_LED 5
 #define RIGHT_BUTTON_LED 6
+#define LEFT_FRONT 7
+#define RIGHT_FRONT 8
 
 Adafruit_NeoPixel leftFront = Adafruit_NeoPixel(36, LEFT_FRONT, NEO_GRBW + NEO_KHZ800);
 Adafruit_NeoPixel rightFront = Adafruit_NeoPixel(36, RIGHT_FRONT, NEO_GRBW + NEO_KHZ800);
@@ -42,6 +42,35 @@ void setup()
 	pinMode(RIGHT_BUTTON_LED, OUTPUT);
 	analogWrite(LEFT_BUTTON_LED, 20);
 	analogWrite(RIGHT_BUTTON_LED, 20);
+	//Setup and ground all remaining pins.
+	pinMode(2, OUTPUT);
+	digitalWrite(2, LOW);
+	pinMode(9, OUTPUT);
+	digitalWrite(9, LOW);
+	pinMode(10, OUTPUT);
+	digitalWrite(10, LOW);
+	pinMode(11, OUTPUT);
+	digitalWrite(11, LOW);
+	pinMode(12, OUTPUT);
+	digitalWrite(12, LOW);
+	pinMode(13, OUTPUT);
+	digitalWrite(13, LOW);
+	pinMode(A0, OUTPUT);
+	analogWrite(A0, 0);
+	pinMode(A1, OUTPUT);
+	analogWrite(A1, 0);
+	pinMode(A2, OUTPUT);
+	analogWrite(A2, 0);
+	pinMode(A3, OUTPUT);
+	analogWrite(A3, 0);
+	pinMode(A4, OUTPUT);
+	analogWrite(A4, 0);
+	pinMode(A5, OUTPUT);
+	analogWrite(A5, 0);
+	pinMode(A6, OUTPUT);
+	analogWrite(A6, 0);
+	pinMode(A7, OUTPUT);
+	analogWrite(A7, 0);
 
 	delay(300);
 	WakeUp();

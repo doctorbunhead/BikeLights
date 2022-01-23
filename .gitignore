@@ -6,3 +6,4 @@ src/RearMainModule/.vs
 src/RearMainModule/__vm
 src/RearMainModule/Release
 src/RearMainModule/Debug
+CopyEasyEdaOutput.bat
