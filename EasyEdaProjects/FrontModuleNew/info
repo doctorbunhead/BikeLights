@@ -4,7 +4,7 @@
   "name": "FrontModuleNew",
   "content": "",
   "created_at": "2021-11-06 17:10:22",
-  "updated_at": "2022-01-23 09:28:38",
+  "updated_at": "2022-01-23 11:44:56",
   "stick": "",
   "documents": [
     {
@@ -129,11 +129,11 @@
         "427b198b58d04b2a9d7ee0adb963c919": 1
       },
       "BOM": [],
-      "updateTime": 1642341406,
+      "updateTime": 1642938296,
       "createTime": 1636221058,
       "histories": [],
       "created_at": "2021-11-06 17:50:58",
-      "updated_at": "2022-01-16 13:56:46"
+      "updated_at": "2022-01-23 11:44:56"
     }
   ],
   "sort": [],

@@ -4,7 +4,7 @@
   "name": "RearModule",
   "content": "",
   "created_at": "2021-11-04 18:20:07",
-  "updated_at": "2022-01-23 10:17:37",
+  "updated_at": "2022-01-23 11:45:38",
   "stick": "",
   "documents": [
     {
@@ -174,11 +174,11 @@
         "134e6cbf8b354b28b6e3ede435170b6f": 1
       },
       "BOM": [],
-      "updateTime": 1642933057,
+      "updateTime": 1642938338,
       "createTime": 1636112862,
       "histories": [],
       "created_at": "2021-11-05 11:47:42",
-      "updated_at": "2022-01-23 10:17:37"
+      "updated_at": "2022-01-23 11:45:38"
     }
   ],
   "sort": [],
