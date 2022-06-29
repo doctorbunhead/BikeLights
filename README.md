@@ -38,7 +38,7 @@
 
 ## About The Project
 
-UPDATE - All moved over to EasyEda and fully bench tested OK. NOTE Code is adapted for v1.0 pcb for prototype testing. Change the v1.0 v1.2 commented sections to use v1.2 pbc design.
+UPDATE - All moved over to EasyEda and fully bench tested OK. NOTE Code is adapted for v1.0 pcb for prototype testing. Change the v1.0 v1.2 commented sections to use v1.2 pbc design. I will soon be moving this project over to ESP32. This will give improved compute power, lower component count and better comms.
 
 This project is currently in a state of flux and I have just moved it from my PC to github. Drawings are now complete. All on EasyEda, no longer Kicad. It's just easier to find parts on there.
 
