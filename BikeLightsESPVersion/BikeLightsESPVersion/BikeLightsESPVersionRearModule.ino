@@ -187,7 +187,9 @@ void loop()
 
 	if (SerialBT.available() > 0) BluetoothRoutine();
 
-	if (Serial1.available() > 0) RfComms();
+	WiFiClient client = wifiServer.available();
+
+	if (client && client.available()) RfComms(client);
 
 	BrakeDetection();
 	UpdatePixels();
@@ -611,9 +613,9 @@ void UpdatePixels() {
 	}
 }
 
-void RfComms() {
+void RfComms(WiFiClient client) {
 	//SerialBT.println("GOT DATA");
-	String inStr = Serial1.readStringUntil(13);
+	String inStr = client.readStringUntil(13);
 	//SerialBT.println(inStr);
 	if (inStr.length() < UNIQUE_KEY.length() + 1) return;
 	char inCommand = inStr[inStr.length() - 1];
@@ -621,4 +623,24 @@ void RfComms() {
 	//SerialBT.println(strStatus);
 	//char* buffer;
 	//Serial1.readBytes(buffer, Serial1.available());
+}
+
+Vector minusGravity(Vector vec)
+{
+
+
+	float x = vec.XAxis, y = vec.YAxis, z = 0;
+	vec.XAxis -= x * cos(yawRad) - y * sin(yawRad);
+	vec.YAxis -= x * sin(yawRad) - y * cos(yawRad);
+
+	x = vec.XAxis; z = vec.ZAxis;
+	vec.XAxis -= x * cos(pitchRad) + z * sin(pitchRad);
+	vec.ZAxis -= -x * sin(pitchRad) + z * cos(pitchRad);
+
+	y = vec.YAxis, z = vec.ZAxis;
+	vec.YAxis -= y * cos(rollRad) - z * sin(rollRad);
+	vec.ZAxis -= y * sin(rollRad) + z * cos(rollRad);
+
+
+	return vec;
 }
