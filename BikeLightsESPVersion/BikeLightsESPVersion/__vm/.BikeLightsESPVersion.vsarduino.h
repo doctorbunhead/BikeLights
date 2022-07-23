@@ -15,20 +15,26 @@
 #define _VSARDUINO_H_
 #define __ESP32_esp32__ 1
 #define __ESP32_ESP32__ 1
-#define _VMDEBUG 1
-#define ESP_PLATFORM 1
-#define MBEDTLS_CONFIG_FILE "mbedtls/esp_config.h"
 #define HAVE_CONFIG_H 1
-#define GCC_NOT_5_2_0 0
+#define MBEDTLS_CONFIG_FILE "mbedtls/esp_config.h"
+#define UNITY_INCLUDE_CONFIG_H 1
 #define WITH_POSIX 1
+#define _GNU_SOURCE 1
+#define IDF_VER "v4.4.1-472-gc9140caf8c"
+#define ESP_PLATFORM 1
+#define _POSIX_READER_WRITER_LOCKS 1
 #define F_CPU 240000000L
 #define ARDUINO 108010
 #define ARDUINO_ESP32_DEV 1
 #define ARDUINO_ARCH_ESP32 1
 #define ARDUINO_BOARD "ESP32_DEV"
 #define ARDUINO_VARIANT "esp32"
+#define ARDUINO_PARTITION_no_ota 1
 #define ESP32 1
 #define CORE_DEBUG_LEVEL 0
+#define ARDUINO_RUNNING_CORE 1
+#define ARDUINO_EVENT_RUNNING_CORE 1
+#define ARDUINO_USB_CDC_ON_BOOT 0
 #define __cplusplus 201103L
 
 #define _Pragma(x)
