@@ -1,0 +1,110 @@
+{
+  "uuid": "cbd3a3009e7fad39c0b69144153ef35a",
+  "path": "Offline/FrontModuleESP",
+  "name": "FrontModuleESP",
+  "content": "",
+  "created_at": "2022-05-10 11:22:19",
+  "updated_at": "2022-07-10 17:42:29",
+  "stick": "",
+  "documents": [
+    {
+      "uuid": "703a8f524ba3857eff0851394d97d145",
+      "title": "FrontModule",
+      "description": "",
+      "docType": "1",
+      "master": "",
+      "thumb": "/images/thumb-default.png",
+      "components": {
+        "3d81358d1cf644cfbc260df0c855f95f": 4,
+        "13976520c7ab473587bb27d7a3d9306b": 1
+      },
+      "BOM": [
+        [
+          "Value",
+          "Quantity",
+          "Package",
+          "Components",
+          "CustomPara"
+        ],
+        [
+          "ESP32DEVKITV1",
+          1,
+          "ESP32-DEVKITV1",
+          "1",
+          {
+            "BOM_Manufacturer Part": "",
+            "puuid": "cd7212c062dc47ca84c2e979df2b5743",
+            "uuid": "13976520c7ab473587bb27d7a3d9306b"
+          }
+        ],
+        [
+          "1000uF",
+          1,
+          "CP_RADIAL_D8.0MM_P3.50MM",
+          "C1",
+          {
+            "puuid": "427b198b58d04b2a9d7ee0adb963c919",
+            "uuid": ""
+          }
+        ],
+        [
+          "MKDS3/2-5.08",
+          4,
+          "CONN-TH_MKDS3-2-5.08",
+          "CN1,CN2,CN3,CN5",
+          {
+            "BOM_Supplier": "LCSC",
+            "BOM_Manufacturer": "Phoenix Contact",
+            "BOM_Manufacturer Part": "MKDS3/2-5.08",
+            "BOM_Supplier Part": "C89120",
+            "BOM_JLCPCB Part Class": "Extended Part",
+            "puuid": "e33f49e2b3194cdf8041c0deed8e9f8f",
+            "uuid": "3d81358d1cf644cfbc260df0c855f95f"
+          }
+        ],
+        [
+          "300R",
+          2,
+          "R_0805",
+          "R1,R2",
+          {
+            "puuid": "f5f9872c4c40453096226f8cd1a9027d",
+            "uuid": ""
+          }
+        ]
+      ],
+      "updateTime": 1657471270,
+      "createTime": 1652178139,
+      "histories": [],
+      "created_at": "2022-05-10 11:22:19",
+      "updated_at": "2022-07-10 17:41:10"
+    },
+    {
+      "uuid": "a69b1e8c2617d538b10d740b731a38ba",
+      "puuid": "cbd3a3009e7fad39c0b69144153ef35a",
+      "title": "PCB_FrontModuleESP",
+      "filename": "PCB_FrontModuleESP.json",
+      "description": "",
+      "docType": "3",
+      "master": "",
+      "thumb": "/images/thumb-default.png",
+      "components": {
+        "427b198b58d04b2a9d7ee0adb963c919": 1,
+        "e33f49e2b3194cdf8041c0deed8e9f8f": 4,
+        "f5f9872c4c40453096226f8cd1a9027d": 2,
+        "cd7212c062dc47ca84c2e979df2b5743": 1
+      },
+      "BOM": [],
+      "updateTime": 1657471349,
+      "createTime": 1657470190,
+      "histories": [],
+      "created_at": "2022-07-10 17:23:10",
+      "updated_at": "2022-07-10 17:42:29"
+    }
+  ],
+  "sort": [],
+  "title": "FrontModuleESP",
+  "foldername": "FrontModuleESP",
+  "schfilename": "FrontModuleESP.json",
+  "schfilemtime": 1657471270661
+}
