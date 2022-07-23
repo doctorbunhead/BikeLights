@@ -45,6 +45,7 @@ int16_t thresholdValue = 1800; //accZ brake threshold
 unsigned long brakeTime = 250000; //time for accZ to be high to trigger brake
 const int thresholdAddress = 0;
 const int brakeTimeAddress = 10;
+const int disabeForTestingAddress = 20;
 
 #define LEFT_REAR 5
 #define RIGHT_REAR 6
@@ -127,6 +128,7 @@ void setup() {
 	inputString.reserve(200);
 	EEPROM.get(thresholdAddress, thresholdValue);
 	EEPROM.get(brakeTimeAddress, brakeTime);
+	EEPROM.get(disabeForTestingAddress, disableBrakeLightsForTesting);
 
 	if (thresholdValue > 32000 || thresholdValue < 100) {
 		thresholdValue = 1800;
@@ -428,12 +430,14 @@ void BluetoothRoutine() {//// blink LED to indicate activity
 	//Brake Testing On
 	if (inputString == "E") {
 		disableBrakeLightsForTesting = true;
+		EEPROM.update(disabeForTestingAddress, disableBrakeLightsForTesting);
 		bluetooth.println("Brake Light Disabled\t\t");
 	}
 
 	//Brake Testing Off
 	if (inputString == "D") {
 		disableBrakeLightsForTesting = false;
+		EEPROM.update(disabeForTestingAddress, disableBrakeLightsForTesting);
 		bluetooth.println("Brake Light Enabled\t\t");
 	}
 	inputString = "";
@@ -569,7 +573,7 @@ void UpdatePixels() {
 		}
 	}
 
-	if (strStatus == "z" && !brakeOn) { //normal
+	if (strStatus == "z" && (!brakeOn || disableBrakeLightsForTesting)) { //normal
 		if ((millis() > microsBlink + 100 && millis() < microsBlink + 150) || millis() > microsBlink + 300) {
 			blink = true;
 		}

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BikeLightsESPVersionFrontModule", "BikeLightsESPVersionFrontModule.vcxproj", "{A9255F20-CCF6-4727-9117-6DEFD952810E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A9255F20-CCF6-4727-9117-6DEFD952810E}.Debug|x86.ActiveCfg = Debug|Win32
+		{A9255F20-CCF6-4727-9117-6DEFD952810E}.Debug|x86.Build.0 = Debug|Win32
+		{A9255F20-CCF6-4727-9117-6DEFD952810E}.Release|x86.ActiveCfg = Release|Win32
+		{A9255F20-CCF6-4727-9117-6DEFD952810E}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {087A32C3-39DB-400B-9B7F-9946594C009F}
+	EndGlobalSection
+EndGlobal
