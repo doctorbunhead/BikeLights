@@ -4,10 +4,10 @@
 
 #include <AutoConnect.h>
 
-#define LEFT_BUTTON GPIO_NUM_34
-#define RIGHT_BUTTON GPIO_NUM_32
-#define LEFT_BUTTON_LED GPIO_NUM_35
-#define RIGHT_BUTTON_LED GPIO_NUM_33
+#define LEFT_BUTTON GPIO_NUM_25
+#define RIGHT_BUTTON GPIO_NUM_27
+#define LEFT_BUTTON_LED GPIO_NUM_26
+#define RIGHT_BUTTON_LED GPIO_NUM_23
 #define LEFT_FRONT GPIO_NUM_15
 #define RIGHT_FRONT GPIO_NUM_2
 
@@ -77,13 +77,13 @@ void setup()
     delay(1000);
     if (blinkStat) {
       ledcWrite(leftLedChannel, 20);
-      ledcWrite(rightLedChannel, 20);
+      ledcWrite(rightLedChannel, 255);
       blinkStat = false;
       Serial.println("true");
     }
     else {
       ledcWrite(leftLedChannel, 255);
-      ledcWrite(rightLedChannel, 255);
+      ledcWrite(rightLedChannel, 20);
       blinkStat = true;
       Serial.println("false");
     }
