@@ -1,33 +1,29 @@
 #include <I2Cdev.h>
-#include <MPU6050_6Axis_MotionApps20.h>
 #include <Adafruit_NeoPixel.h>
 #include <eeprom.h>
 #include "BluetoothSerial.h"
 #include <WiFi.h>
-
-//#include "MPU6050.h" // not necessary if using MotionApps include file
-
-// Arduino Wire library is required if I2Cdev I2CDEV_ARDUINO_WIRE implementation
-// is used in I2Cdev.h
+#include "ESPAsyncWebServer.h"
 #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
 #include <Wire.h>
 #endif
+#include <Adafruit_MPU6050.h>
+#include <Adafruit_Sensor.h>
+#include <CircularBuffer.h>
 
-// class default I2C address is 0x68
-// specific I2C addresses may be passed as a parameter here
-// AD0 low = 0x68 (default for SparkFun breakout and InvenSense evaluation board)
-// AD0 high = 0x69
-MPU6050 mpu;
+CircularBuffer<float, 50> accelX;
+CircularBuffer<float, 50> accelY;
+CircularBuffer<float, 50> accelZ;
+float accelNorm = 0.0f;
+
+Adafruit_MPU6050 mpu;
 
 BluetoothSerial SerialBT;
-
-WiFiServer wifiServer(80);
 
 const char* ssid = "KdBikeLights";
 const char* password = "1234567890";
 
-#define RESTRICT_PITCH // Comment out to restrict roll to ±90deg instead - please read: http://www.freescale.com/files/sensors/doc/app_note/AN3461.pdf
-#define OUTPUT_READABLE_WORLDACCEL;
+AsyncWebServer server(80);
 
 unsigned long microsOld = 0;
 unsigned long microsBrake = 0;
@@ -49,7 +45,7 @@ int16_t thresholdValue = 1800; //accZ brake threshold
 unsigned long brakeTime = 250000; //time for accZ to be high to trigger brake
 const int thresholdAddress = 0;
 const int brakeTimeAddress = 10;
-const int disabeForTestingAddress = 20;
+const int disableForTestingAddress = 20;
 
 #define LEFT_REAR GPIO_NUM_15
 #define RIGHT_REAR GPIO_NUM_2
@@ -62,35 +58,9 @@ String UNIQUE_KEY = "01ad64hg";
 String strStatus = "z";
 String strInput = "";
 
-// MPU control/status vars
-bool dmpReady = false;  // set true if DMP init was successful
-uint8_t mpuIntStatus;   // holds actual interrupt status byte from MPU
-uint8_t devStatus;      // return status after each device operation (0 = success, !0 = error)
-uint16_t packetSize;    // expected DMP packet size (default is 42 bytes)
-uint16_t fifoCount;     // count of all bytes currently in FIFO
-uint8_t fifoBuffer[64]; // FIFO storage buffer
-
-						// orientation/motion vars
-Quaternion q;           // [w, x, y, z]         quaternion container
-VectorInt16 aa;         // [x, y, z]            accel sensor measurements
-VectorInt16 aaReal;     // [x, y, z]            gravity-free accel sensor measurements
-VectorInt16 aaWorld;    // [x, y, z]            world-frame accel sensor measurements
-VectorFloat gravity;    // [x, y, z]            gravity vector
-float euler[3];         // [psi, theta, phi]    Euler angle container
-float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
-
-///end invensense stuff
-
 String inputString = "";
 
-//Board V1.0 config
-
-//Board V1.2 config
-//SoftwareSerial bluetooth = SoftwareSerial(14, 15);
-
-// ================================================================
-// ===               INTERRUPT DETECTION ROUTINE                ===
-// ================================================================
+const float GRAVITY = 9.80665f;
 
 volatile bool mpuInterrupt = false;     // indicates whether MPU interrupt pin has gone high
 void dmpDataReady() {
@@ -108,12 +78,16 @@ void setup() {
 
 	Serial.print("wifi IP ");
 	Serial.println(IP);
-	wifiServer.begin();
 
+	server.on("/status/", HTTP_POST, [](AsyncWebServerRequest* request) {
+		SetStatus(request);
+		});
+
+	server.begin();
 	inputString.reserve(200);
 	EEPROM.get(thresholdAddress, thresholdValue);
 	EEPROM.get(brakeTimeAddress, brakeTime);
-	EEPROM.get(disabeForTestingAddress, disableBrakeLightsForTesting);
+	EEPROM.get(disableForTestingAddress, disableBrakeLightsForTesting);
 
 	if (thresholdValue > 32000 || thresholdValue < 100) {
 		thresholdValue = 1800;
@@ -135,49 +109,23 @@ void setup() {
 	Fastwire::setup(400, true);
 #endif
 
-	// initialize device
 	SerialBT.println(F("Initializing I2C devices..."));
-	mpu.initialize();
 	pinMode(INTERRUPT_PIN, INPUT);
-
-	// verify connection
-	SerialBT.println(F("Testing device connections..."));
-	SerialBT.println(mpu.testConnection() ? F("MPU6050 connection successful") : F("MPU6050 connection failed"));
-	// load and configure the DMP
-	SerialBT.println(F("Initializing DMP..."));
-	devStatus = mpu.dmpInitialize();
-
-	// supply your own gyro offsets here, scaled for min sensitivity
-	mpu.setXGyroOffset(220);
-	mpu.setYGyroOffset(76);
-	mpu.setZGyroOffset(-85);
-	mpu.setZAccelOffset(1575); // 1688 factory default for my test chip
-   // make sure it worked (returns 0 if so)
-	if (devStatus == 0) {
+	bool devStatus = mpu.begin();
+	if (devStatus) {
 		// turn on the DMP, now that it's ready
-		SerialBT.println(F("Enabling DMP..."));
-		mpu.setDMPEnabled(true);
-		// enable Arduino interrupt detection
-		SerialBT.println(F("Enabling interrupt detection (Arduino external interrupt 0)..."));
+		SerialBT.println(F("Found MPU"));
+		
 		attachInterrupt(digitalPinToInterrupt(INTERRUPT_PIN), dmpDataReady, RISING);
-		mpuIntStatus = mpu.getIntStatus();
-
-		// set our DMP Ready flag so the main loop() function knows it's okay to use it
-		SerialBT.println(F("DMP ready! Waiting for first interrupt..."));
-		dmpReady = true;
-
-		// get expected DMP packet size for later comparison
-		packetSize = mpu.dmpGetFIFOPacketSize();
+		mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
+		mpu.setGyroRange(MPU6050_RANGE_500_DEG);
+		mpu.setFilterBandwidth(MPU6050_BAND_21_HZ);
 	}
 	else {
 		SerialBT.print(F("DMP Initialization failed (code "));
 		SerialBT.print(devStatus);
 		SerialBT.println(F(")"));
 	}
-
-	
-
-	// configure LED for output
 	WakeUp();
 }
 
@@ -187,16 +135,12 @@ void loop()
 
 	if (SerialBT.available() > 0) BluetoothRoutine();
 
-	WiFiClient client = wifiServer.available();
-
-	if (client && client.available()) RfComms(client);
-
 	BrakeDetection();
 	UpdatePixels();
 }
 
 void BrakeDetection() {  //detect braking
-	if (aaReal.z > thresholdValue && !brakeDetect) {
+	if (accelNorm > thresholdValue && !brakeDetect) {
 		microsBrake = micros();
 		brakeDetect = true;
 		if (btConnected && !brakeTrigOnSent) {
@@ -205,7 +149,7 @@ void BrakeDetection() {  //detect braking
 			brakeTrigOffSent = false;
 		}
 	}
-	if (aaReal.z < thresholdValue) {
+	if (accelNorm < thresholdValue) {
 		brakeDetect = false;
 		if (btConnected && !brakeTrigOffSent) {
 			SerialBT.println("Brake Trigger Off\t\t");
@@ -289,56 +233,48 @@ void WakeUp() {
 }
 
 void MpuRoutine() {
-	if (!dmpReady) return;
+	/* Get new sensor events with the readings */
+	sensors_event_t a, g, temp;
+	mpu.getEvent(&a, &g, &temp);
 
-	// wait for MPU interrupt or extra packet(s) available
-	while (!mpuInterrupt && fifoCount < packetSize) {
+	accelX.push(a.acceleration.x);
+	accelY.push(a.acceleration.y);
+	accelZ.push(a.acceleration.z);
+
+
+	float avgX = 0.0;
+	// the following ensures using the right type for the index variable
+	using index_t = decltype(accelX)::index_t;
+	for (index_t i = 0; i < accelX.size(); i++) {
+		avgX += accelX[i] / accelX.size();
 	}
 
-	// reset interrupt flag and get INT_STATUS byte
-	mpuInterrupt = false;
-	mpuIntStatus = mpu.getIntStatus();
-
-	// get current FIFO count
-	fifoCount = mpu.getFIFOCount();
-
-	// check for overflow (this should never happen unless our code is too inefficient)
-	if ((mpuIntStatus & 0x10) || fifoCount == 1024) {
-		// reset so we can continue cleanly
-		mpu.resetFIFO();
-		//mpu.reset();
-		//SerialBT.println(F("FIFO overflow!"));
-
-		// otherwise, check for DMP data ready interrupt (this should happen frequently)
+	float avgY = 0.0;
+	// the following ensures using the right type for the index variable
+	using index_t = decltype(accelY)::index_t;
+	for (index_t i = 0; i < accelY.size(); i++) {
+		avgY += accelY[i] / accelY.size();
 	}
-	else if (mpuIntStatus & 0x02) {
-		// wait for correct available data length, should be a VERY short wait
-		while (fifoCount < packetSize) fifoCount = mpu.getFIFOCount();
 
-		// read a packet from FIFO
-		mpu.getFIFOBytes(fifoBuffer, packetSize);
-
-		// track FIFO count here in case there is > 1 packet available
-		// (this lets us immediately read more without waiting for an interrupt)
-		fifoCount -= packetSize;
-
-		// display initial world-frame acceleration, adjusted to remove gravity
-		// and rotated based on known orientation from quaternion
-		mpu.dmpGetQuaternion(&q, fifoBuffer);
-		mpu.dmpGetAccel(&aa, fifoBuffer);
-		mpu.dmpGetGravity(&gravity, &q);
-		mpu.dmpGetLinearAccel(&aaReal, &aa, &gravity);
-		mpu.dmpGetLinearAccelInWorld(&aaWorld, &aaReal, &q);
-		//logging = true;
-		if (logging) {
-			SerialBT.print(aaReal.x);
-			SerialBT.print("\t");
-			SerialBT.print(aaReal.y);
-			SerialBT.print("\t");
-			SerialBT.println(aaReal.z);
-		}
+	float avgZ = 0.0;
+	// the following ensures using the right type for the index variable
+	using index_t = decltype(accelZ)::index_t;
+	for (index_t i = 0; i < accelZ.size(); i++) {
+		avgZ += accelZ[i] / accelZ.size();
 	}
-	///************* END MPU6050 *************
+
+	accelNorm = sqrtf(powf(avgX, 2.0f) + powf(avgY, 2.0f) + powf(avgZ, 2.0f) - pow(GRAVITY, 2.0f));
+
+
+	if (logging) {
+		SerialBT.print(avgX);
+		SerialBT.print('\t');
+		SerialBT.print(avgY);
+		SerialBT.print('\t');
+		SerialBT.print(avgZ);
+		SerialBT.print('\t');
+		SerialBT.println(accelNorm);
+	}
 }
 
 void BluetoothRoutine() {//// blink LED to indicate activity
@@ -406,7 +342,7 @@ void BluetoothRoutine() {//// blink LED to indicate activity
 		logging = true;
 		SerialBT.println("Logging On\t\t");
 		//SerialBT.println("accX\taccY\taccZ\tgyrox\tgyroY\tgyroZ\t\tRoll\tgyroXAngle\tCompXAngle\tkalXAngle\t\tpitch\tgyroYAngle\tcompAngleY\tkalAngleY\ttemp");
-		SerialBT.println("aworld-x\taworld-y\taworld-z");
+		SerialBT.println("aveX\taveY\taveZ\taccelNorm");
 	}
 
 	//Logging Off
@@ -418,7 +354,7 @@ void BluetoothRoutine() {//// blink LED to indicate activity
 	//Brake Testing On
 	if (inputString == "E") {
 		disableBrakeLightsForTesting = true;
-		EEPROM.put(disabeForTestingAddress, disableBrakeLightsForTesting);
+		EEPROM.put(disableForTestingAddress, disableBrakeLightsForTesting);
 		EEPROM.commit();
 		SerialBT.println("Brake Light Disabled\t\t");
 	}
@@ -426,7 +362,7 @@ void BluetoothRoutine() {//// blink LED to indicate activity
 	//Brake Testing Off
 	if (inputString == "D") {
 		disableBrakeLightsForTesting = false;
-		EEPROM.put(disabeForTestingAddress, disableBrakeLightsForTesting);
+		EEPROM.put(disableForTestingAddress, disableBrakeLightsForTesting);
 		EEPROM.commit();
 		SerialBT.println("Brake Light Enabled\t\t");
 	}
@@ -613,34 +549,16 @@ void UpdatePixels() {
 	}
 }
 
-void RfComms(WiFiClient client) {
-	//SerialBT.println("GOT DATA");
-	String inStr = client.readStringUntil(13);
-	//SerialBT.println(inStr);
+void SetStatus(AsyncWebServerRequest* request) {
+	SerialBT.println("GOT DATA");
+	AsyncWebServerRequest derefRequest = *request;
+	String inStr = derefRequest.arg("plain");
+	SerialBT.println(inStr);
 	if (inStr.length() < UNIQUE_KEY.length() + 1) return;
 	char inCommand = inStr[inStr.length() - 1];
 	strStatus = String(inCommand);
+	Serial.println(inCommand);
 	//SerialBT.println(strStatus);
 	//char* buffer;
 	//Serial1.readBytes(buffer, Serial1.available());
-}
-
-Vector minusGravity(Vector vec)
-{
-
-
-	float x = vec.XAxis, y = vec.YAxis, z = 0;
-	vec.XAxis -= x * cos(yawRad) - y * sin(yawRad);
-	vec.YAxis -= x * sin(yawRad) - y * cos(yawRad);
-
-	x = vec.XAxis; z = vec.ZAxis;
-	vec.XAxis -= x * cos(pitchRad) + z * sin(pitchRad);
-	vec.ZAxis -= -x * sin(pitchRad) + z * cos(pitchRad);
-
-	y = vec.YAxis, z = vec.ZAxis;
-	vec.YAxis -= y * cos(rollRad) - z * sin(rollRad);
-	vec.ZAxis -= y * sin(rollRad) + z * cos(rollRad);
-
-
-	return vec;
 }

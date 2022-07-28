@@ -206,6 +206,7 @@ void ProcessButtons() {
       }
 
       Serial.println(UNIQUE_KEY + strStatus);
+      SendStatus();
       //delay(500);
     }
   }
@@ -303,4 +304,13 @@ void UpdateLeds() {
   }
   leftFront.show();
   rightFront.show();
+}
+
+void SendStatus() {
+    HTTPClient http;
+    http.begin("http://192.168.4.1/status/");
+    http.addHeader("Content-Type", "text/plain");
+    String postData = UNIQUE_KEY + strStatus;
+    http.POST(postData);
+    http.end();
 }
