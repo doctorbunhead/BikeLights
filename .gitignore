@@ -21,3 +21,5 @@ src/Obselete code/ATTinyRearSlave/.vs
 src/ATTinyFrontSlave/.vs
 BikeLightsESPVersion/nul.d
 BikeLightsESPVersionFrontModule/Release
+BikeLightsESPVersion/BikeLightsESPVersion/__vm
+BikeLightsESPVersionFrontModule/__vm
