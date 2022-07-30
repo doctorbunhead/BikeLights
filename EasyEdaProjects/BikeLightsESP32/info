@@ -1,0 +1,164 @@
+{
+  "uuid": "6993b9aadb157c737a7f9f5c41351a47",
+  "path": "Offline/BikeLightsESP32",
+  "name": "BikeLightsESP32",
+  "content": "",
+  "created_at": "2022-03-12 14:36:56",
+  "updated_at": "2022-07-28 13:01:14",
+  "stick": "",
+  "documents": [
+    {
+      "uuid": "09d322bc89c1b037fa75a68025b7d4fc",
+      "title": "RearModule",
+      "description": "",
+      "docType": "1",
+      "master": "",
+      "thumb": "/images/thumb-default.png",
+      "components": {
+        "3d81358d1cf644cfbc260df0c855f95f": 2,
+        "663811b867c343fbb58ffdccf22fef08": 2,
+        "a0a27df1bc354b718ab2a1fb290dfab8": 1,
+        "fc7da4bb17ec4d00b8aa210ee11b03e2": 1,
+        "0184cd15b188469cbfcbc417114696a7": 1,
+        "22c595a555e74b31bd74c1490eb4373f": 2
+      },
+      "BOM": [
+        [
+          "Value",
+          "Quantity",
+          "Package",
+          "Components",
+          "CustomPara"
+        ],
+        [
+          "100nF",
+          2,
+          "C0805",
+          "C2,C3",
+          {
+            "BOM_Supplier": "LCSC",
+            "BOM_Manufacturer": "WTC",
+            "BOM_Manufacturer Part": "0805F104M500",
+            "BOM_Supplier Part": "C95395",
+            "BOM_JLCPCB Part Class": "Extended Part",
+            "puuid": "2ee8eb13a0124a108e622ce40c0c25a8",
+            "uuid": "22c595a555e74b31bd74c1490eb4373f"
+          }
+        ],
+        [
+          "1000uF",
+          1,
+          "CP_RADIAL_D8.0MM_P3.50MM",
+          "C5",
+          {
+            "puuid": "427b198b58d04b2a9d7ee0adb963c919",
+            "uuid": ""
+          }
+        ],
+        [
+          "MKDS3/2-5.08",
+          2,
+          "CONN-TH_MKDS3-2-5.08",
+          "CN1,CN4",
+          {
+            "BOM_Supplier": "LCSC",
+            "BOM_Manufacturer": "Phoenix Contact",
+            "BOM_Manufacturer Part": "MKDS3/2-5.08",
+            "BOM_Supplier Part": "C89120",
+            "BOM_JLCPCB Part Class": "Extended Part",
+            "puuid": "e33f49e2b3194cdf8041c0deed8e9f8f",
+            "uuid": "3d81358d1cf644cfbc260df0c855f95f"
+          }
+        ],
+        [
+          "GY-521-8pin",
+          1,
+          "GY-521-8PIN",
+          "P1",
+          {
+            "BOM_Manufacturer Part": "",
+            "puuid": "4b643072e9ee432a92d431124506085a",
+            "uuid": "a0a27df1bc354b718ab2a1fb290dfab8"
+          }
+        ],
+        [
+          "TXB0108PWRG4",
+          1,
+          "TSSOP-20_L6.5-W4.4-P0.65-LS6.4-BL",
+          "U1",
+          {
+            "BOM_Supplier": "LCSC",
+            "BOM_Supplier Part": "C2677607",
+            "BOM_Manufacturer": "TI(德州仪器)",
+            "BOM_Manufacturer Part": "TXB0108PWRG4",
+            "puuid": "1586800a83194e228c6527ad76c86945",
+            "uuid": "0184cd15b188469cbfcbc417114696a7"
+          }
+        ],
+        [
+          "ESP32-DEVKITV1-38PIN SIMPLE",
+          1,
+          "ESP32-DEVKIT-V1.0-38PIN-PCB",
+          "U2",
+          {
+            "BOM_Manufacturer": "espressif",
+            "BOM_Manufacturer Part": "ESP-WROOM-32",
+            "BOM_Supplier Part": "",
+            "BOM_Supplier": "Aliexpress",
+            "puuid": "7f0d9c4bc2e14c11a8e8972af870a4ec",
+            "uuid": "fc7da4bb17ec4d00b8aa210ee11b03e2"
+          }
+        ],
+        [
+          "300",
+          2,
+          "R0805",
+          "U3,U4",
+          {
+            "BOM_Supplier": "LCSC",
+            "BOM_Supplier Part": "C365284",
+            "BOM_Manufacturer": "ResistorToday",
+            "BOM_Manufacturer Part": "HPCR0805F300RK9",
+            "puuid": "b60f399a7a7e41848b2be1eb49c79141",
+            "uuid": "663811b867c343fbb58ffdccf22fef08"
+          }
+        ]
+      ],
+      "updateTime": 1659008949,
+      "createTime": 1647095817,
+      "histories": [],
+      "created_at": "2022-03-12 14:36:57",
+      "updated_at": "2022-07-28 12:49:09"
+    },
+    {
+      "uuid": "65e4a170e7693d447716a9d8f95eea7b",
+      "puuid": "6993b9aadb157c737a7f9f5c41351a47",
+      "title": "PCB_BikeLightsESP32",
+      "filename": "PCB_BikeLightsESP32.json",
+      "description": "",
+      "docType": "3",
+      "master": "",
+      "thumb": "/images/thumb-default.png",
+      "components": {
+        "427b198b58d04b2a9d7ee0adb963c919": 1,
+        "e33f49e2b3194cdf8041c0deed8e9f8f": 2,
+        "4b643072e9ee432a92d431124506085a": 1,
+        "7f0d9c4bc2e14c11a8e8972af870a4ec": 1,
+        "b60f399a7a7e41848b2be1eb49c79141": 2,
+        "2ee8eb13a0124a108e622ce40c0c25a8": 2,
+        "1586800a83194e228c6527ad76c86945": 1
+      },
+      "BOM": [],
+      "updateTime": 1659009674,
+      "createTime": 1647208512,
+      "histories": [],
+      "created_at": "2022-03-13 21:55:12",
+      "updated_at": "2022-07-28 13:01:14"
+    }
+  ],
+  "sort": [],
+  "title": "BikeLightsESP32",
+  "foldername": "BikeLightsESP32",
+  "schfilename": "BikeLightsESP32.json",
+  "schfilemtime": 1659008949558
+}
