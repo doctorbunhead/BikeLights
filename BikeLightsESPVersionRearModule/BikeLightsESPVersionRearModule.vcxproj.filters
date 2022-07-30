@@ -18,7 +18,7 @@
     <None Include="BikeLightsESPVersionRearModule.ino" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="__vm\.BikeLightsESPVersion.vsarduino.h">
+    <ClInclude Include="__vm\.BikeLightsESPVersionRearModule.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

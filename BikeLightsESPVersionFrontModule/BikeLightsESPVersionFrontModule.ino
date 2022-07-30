@@ -4,6 +4,8 @@
 
 #include <AutoConnect.h>
 
+#include <AsyncUDP.h>
+
 #define LEFT_BUTTON GPIO_NUM_25
 #define RIGHT_BUTTON GPIO_NUM_27
 #define LEFT_BUTTON_LED GPIO_NUM_26
@@ -41,14 +43,34 @@ char server[] = "192.168.4.1";
 
 WiFiClient client;
 
+AsyncUDP udp;
+
 const int freq = 5000;
 const int leftLedChannel = 0;
 const int rightLedChannel = 1;
 const int resolution = 8;
 
+void WiFiStationConnected(WiFiEvent_t event, WiFiEventInfo_t info) {
+    Serial.println("Connected to AP successfully!");
+}
+
+void WiFiGotIP(WiFiEvent_t event, WiFiEventInfo_t info) {
+    Serial.println("WiFi connected");
+    Serial.println("IP address: ");
+    Serial.println(WiFi.localIP());
+}
+
+void WiFiStationDisconnected(WiFiEvent_t event, WiFiEventInfo_t info) {
+    Serial.println("Disconnected from WiFi access point");
+    Serial.print("WiFi lost connection. Reason: ");
+    Serial.println(info.disconnected.reason);
+    Serial.println("Trying to Reconnect");
+    WiFi.begin(ssid, password);
+}
+
 void setup()
 {
-  Serial.begin(115200);
+  Serial.begin(921600);
   leftFront.begin();
   leftFront.show(); // Initialize all pixels to 'off'
   rightFront.begin();
@@ -69,30 +91,36 @@ void setup()
 
   bool blinkStat = false;
 
+  WiFi.disconnect(true);
+
+  delay(1000);
+
+  WiFi.onEvent(WiFiStationConnected, SYSTEM_EVENT_STA_CONNECTED);
+  WiFi.onEvent(WiFiGotIP, SYSTEM_EVENT_STA_GOT_IP);
+  WiFi.onEvent(WiFiStationDisconnected, SYSTEM_EVENT_STA_DISCONNECTED);
+
+
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
-    Serial.print("status ");
-    Serial.println(WiFi.status());
-    delay(1000);
-    if (blinkStat) {
-      ledcWrite(leftLedChannel, 20);
-      ledcWrite(rightLedChannel, 255);
-      blinkStat = false;
-      Serial.println("true");
-    }
-    else {
-      ledcWrite(leftLedChannel, 255);
-      ledcWrite(rightLedChannel, 20);
-      blinkStat = true;
-      Serial.println("false");
-    }
+      Serial.print("status ");
+      Serial.println(WiFi.status());
+      delay(1000);
+      if (blinkStat) {
+          ledcWrite(leftLedChannel, 20);
+          ledcWrite(rightLedChannel, 255);
+          blinkStat = false;
+          Serial.println("true");
+      }
+      else {
+          ledcWrite(leftLedChannel, 255);
+          ledcWrite(rightLedChannel, 20);
+          blinkStat = true;
+          Serial.println("false");
+      }
   }
 
   Serial.println("Connected to wifi");
-
-
-
 
   delay(300);
   WakeUp();
@@ -101,9 +129,16 @@ void loop() // run over and over
 {
   unsigned long now = millis();
   if (now > lastSend + sendDelay) {
+      /*if ((WiFi.status() != WL_CONNECTED)) {
+          Serial.print(millis());
+          Serial.println("Reconnecting to WiFi...");
+          WiFi.disconnect();
+          WiFi.begin(ssid, password);
+      }*/
     lastSend = now;
     String message = UNIQUE_KEY + strStatus;
     Serial.println(message);
+    SendStatus();
   }
 
   ProcessButtons();
@@ -190,7 +225,7 @@ void ProcessButtons() {
         strStatus = "z";
       }
 
-      Serial.println(UNIQUE_KEY + strStatus);
+      SendStatus();
       //delay(500);
     }
     if (rightState && stateChange) {
@@ -307,10 +342,7 @@ void UpdateLeds() {
 }
 
 void SendStatus() {
-    HTTPClient http;
-    http.begin("http://192.168.4.1/status/");
-    http.addHeader("Content-Type", "text/plain");
-    String postData = UNIQUE_KEY + strStatus;
-    http.POST(postData);
-    http.end();
+    const char* stat;
+    String message = UNIQUE_KEY + strStatus;
+    udp.broadcastTo(message.c_str(), 4909);
 }

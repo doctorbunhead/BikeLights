@@ -23,3 +23,7 @@ BikeLightsESPVersion/nul.d
 BikeLightsESPVersionFrontModule/Release
 BikeLightsESPVersion/BikeLightsESPVersion/__vm
 BikeLightsESPVersionFrontModule/__vm
+BikeLightsESPVersionRearModule/.vs
+BikeLightsESPVersionRearModule/__vm
+BikeLightsESPVersionRearModule/Debug
+BikeLightsESPVersionRearModule/Release

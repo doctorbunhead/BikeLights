@@ -1,9 +1,9 @@
 #include <I2Cdev.h>
 #include <Adafruit_NeoPixel.h>
-#include <eeprom.h>
+#include <EEPROM.h>
 #include "BluetoothSerial.h"
 #include <WiFi.h>
-#include "ESPAsyncWebServer.h"
+#include <AsyncUDP.h>
 #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
 #include <Wire.h>
 #endif
@@ -23,7 +23,7 @@ BluetoothSerial SerialBT;
 const char* ssid = "KdBikeLights";
 const char* password = "1234567890";
 
-AsyncWebServer server(80);
+AsyncUDP udp;
 
 unsigned long microsOld = 0;
 unsigned long microsBrake = 0;
@@ -41,7 +41,7 @@ bool blink = false;
 bool disableBrakeLightsForTesting = false;
 unsigned long microsBlink = 0;
 
-int16_t thresholdValue = 1800; //accZ brake threshold
+float thresholdValue = 3.0f; //accZ brake threshold
 unsigned long brakeTime = 250000; //time for accZ to be high to trigger brake
 const int thresholdAddress = 0;
 const int brakeTimeAddress = 10;
@@ -62,13 +62,9 @@ String inputString = "";
 
 const float GRAVITY = 9.80665f;
 
-volatile bool mpuInterrupt = false;     // indicates whether MPU interrupt pin has gone high
-void dmpDataReady() {
-	mpuInterrupt = true;
-}
-
 void setup() {
-	Serial.begin(115200);
+	Serial.begin(921600);
+	
 	SerialBT.begin("RearMod");
 	tcpip_adapter_init();
 
@@ -79,18 +75,23 @@ void setup() {
 	Serial.print("wifi IP ");
 	Serial.println(IP);
 
-	server.on("/status/", HTTP_POST, [](AsyncWebServerRequest* request) {
-		SetStatus(request);
-		});
+	if (udp.listen(4909)) {
+		Serial.println("listening...");
+		udp.onPacket([](AsyncUDPPacket packet) {
+			Serial.println("GotPacket");
+			String statString = (const char*)packet.data();
+			SetStatus(statString);
+			});
+	}
 
-	server.begin();
+	
 	inputString.reserve(200);
 	EEPROM.get(thresholdAddress, thresholdValue);
 	EEPROM.get(brakeTimeAddress, brakeTime);
 	EEPROM.get(disableForTestingAddress, disableBrakeLightsForTesting);
 
-	if (thresholdValue > 32000 || thresholdValue < 100) {
-		thresholdValue = 1800;
+	if (thresholdValue > 6.0f || thresholdValue < 0.0f) {
+		thresholdValue = 3.0f;
 		EEPROM.put(thresholdAddress, thresholdValue);
 		EEPROM.commit();
 	}
@@ -110,13 +111,13 @@ void setup() {
 #endif
 
 	SerialBT.println(F("Initializing I2C devices..."));
-	pinMode(INTERRUPT_PIN, INPUT);
+	//pinMode(INTERRUPT_PIN, INPUT);
 	bool devStatus = mpu.begin();
 	if (devStatus) {
 		// turn on the DMP, now that it's ready
 		SerialBT.println(F("Found MPU"));
 		
-		attachInterrupt(digitalPinToInterrupt(INTERRUPT_PIN), dmpDataReady, RISING);
+		//attachInterrupt(digitalPinToInterrupt(INTERRUPT_PIN), dmpDataReady, RISING);
 		mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
 		mpu.setGyroRange(MPU6050_RANGE_500_DEG);
 		mpu.setFilterBandwidth(MPU6050_BAND_21_HZ);
@@ -263,15 +264,38 @@ void MpuRoutine() {
 		avgZ += accelZ[i] / accelZ.size();
 	}
 
-	accelNorm = sqrtf(powf(avgX, 2.0f) + powf(avgY, 2.0f) + powf(avgZ, 2.0f) - pow(GRAVITY, 2.0f));
+	float squares = powf(avgX, 2.0f) + powf(avgY, 2.0f) + powf(avgZ, 2.0f);
+	float gsquare = pow(GRAVITY, 2.0f);
+	float sumSquares = squares - gsquare;
+	//if (sumSquares < 0) sumSquares = -sumSquares;
+	accelNorm = sqrtf(sumSquares);
 
 
 	if (logging) {
+		SerialBT.print("avgX");
+		SerialBT.print('\t');
+		SerialBT.print("avgY");
+		SerialBT.print('\t');
+		SerialBT.print("avgZ");
+		SerialBT.print('\t');
+		SerialBT.print("squares");
+		SerialBT.print('\t');
+		SerialBT.print("gsquare");
+		SerialBT.print('\t');
+		SerialBT.print("sumSquares");
+		SerialBT.print('\t');
+		SerialBT.println("accelNorm");
 		SerialBT.print(avgX);
 		SerialBT.print('\t');
 		SerialBT.print(avgY);
 		SerialBT.print('\t');
 		SerialBT.print(avgZ);
+		SerialBT.print('\t');
+		SerialBT.print(squares);
+		SerialBT.print('\t');
+		SerialBT.print(gsquare);
+		SerialBT.print('\t');
+		SerialBT.print(sumSquares);
 		SerialBT.print('\t');
 		SerialBT.println(accelNorm);
 	}
@@ -317,8 +341,8 @@ void BluetoothRoutine() {//// blink LED to indicate activity
 
 	//Increase Threshold
 	if (inputString == "W") {
-		thresholdValue += 100;
-		if (thresholdValue > 32000) thresholdValue = 32000;
+		thresholdValue += 0.1f;
+		if (thresholdValue > 6.0F) thresholdValue = 6.0f;
 		EEPROM.put(thresholdAddress, thresholdValue);
 		EEPROM.commit();
 		SerialBT.print("Threshold increased to ");
@@ -328,8 +352,8 @@ void BluetoothRoutine() {//// blink LED to indicate activity
 
 	//Decrease thresholdValue Comparison
 	if (inputString == "S") {
-		thresholdValue -= 100;
-		if (thresholdValue < 100) thresholdValue = 100;
+		thresholdValue -= 0.1f;
+		if (thresholdValue < 0.0f) thresholdValue = 0.0f;
 		EEPROM.put(thresholdAddress, thresholdValue);
 		EEPROM.commit();
 		SerialBT.print("Threshold decreased to ");
@@ -549,13 +573,12 @@ void UpdatePixels() {
 	}
 }
 
-void SetStatus(AsyncWebServerRequest* request) {
-	SerialBT.println("GOT DATA");
-	AsyncWebServerRequest derefRequest = *request;
-	String inStr = derefRequest.arg("plain");
-	SerialBT.println(inStr);
-	if (inStr.length() < UNIQUE_KEY.length() + 1) return;
-	char inCommand = inStr[inStr.length() - 1];
+void SetStatus(String statString) {
+	Serial.println("GOT DATA");
+	
+	Serial.println(statString);
+	if (statString.length() < UNIQUE_KEY.length() + 1) return;
+	char inCommand = statString[statString.length() - 1];
 	strStatus = String(inCommand);
 	Serial.println(inCommand);
 	//SerialBT.println(strStatus);

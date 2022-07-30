@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32126.315
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BikeLightsESPVersionRearModule", "BikeLightsESPVersion\BikeLightsESPVersion.vcxproj", "{C5F80730-F44F-4478-BDAE-6634EFC2CA88}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BikeLightsESPVersionRearModule", "BikeLightsESPVersionRearModule.vcxproj", "{C5F80730-F44F-4478-BDAE-6634EFC2CA88}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AsyncUdpSendReceive", "..\..\My Examples\AsyncUdpSendReceive\AsyncUdpSendReceive.vcxproj", "{19F9A970-5B9A-45D0-BA3C-98189B54025D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,11 +17,15 @@ Global
 		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Debug|x86.Build.0 = Debug|Win32
 		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Release|x86.ActiveCfg = Release|Win32
 		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Release|x86.Build.0 = Release|Win32
+		{19F9A970-5B9A-45D0-BA3C-98189B54025D}.Debug|x86.ActiveCfg = Debug|Win32
+		{19F9A970-5B9A-45D0-BA3C-98189B54025D}.Debug|x86.Build.0 = Debug|Win32
+		{19F9A970-5B9A-45D0-BA3C-98189B54025D}.Release|x86.ActiveCfg = Release|Win32
+		{19F9A970-5B9A-45D0-BA3C-98189B54025D}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {B53C9756-7C27-41CF-8414-580F2970F88D}
+		SolutionGuid = {130D61B9-E20E-479B-A070-A07AC46384FC}
 	EndGlobalSection
 EndGlobal
