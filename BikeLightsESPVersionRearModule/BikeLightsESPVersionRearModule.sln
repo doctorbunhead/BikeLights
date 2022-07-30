@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BikeLightsESPVersionRearMod
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AsyncUdpSendReceive", "..\..\My Examples\AsyncUdpSendReceive\AsyncUdpSendReceive.vcxproj", "{19F9A970-5B9A-45D0-BA3C-98189B54025D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AsyncUDPClient", "..\..\My Examples\AsyncUDPClient\AsyncUDPClient.vcxproj", "{EFA90C25-0223-4084-B088-966E830CE8AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -21,6 +23,10 @@ Global
 		{19F9A970-5B9A-45D0-BA3C-98189B54025D}.Debug|x86.Build.0 = Debug|Win32
 		{19F9A970-5B9A-45D0-BA3C-98189B54025D}.Release|x86.ActiveCfg = Release|Win32
 		{19F9A970-5B9A-45D0-BA3C-98189B54025D}.Release|x86.Build.0 = Release|Win32
+		{EFA90C25-0223-4084-B088-966E830CE8AE}.Debug|x86.ActiveCfg = Debug|Win32
+		{EFA90C25-0223-4084-B088-966E830CE8AE}.Debug|x86.Build.0 = Debug|Win32
+		{EFA90C25-0223-4084-B088-966E830CE8AE}.Release|x86.ActiveCfg = Release|Win32
+		{EFA90C25-0223-4084-B088-966E830CE8AE}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
