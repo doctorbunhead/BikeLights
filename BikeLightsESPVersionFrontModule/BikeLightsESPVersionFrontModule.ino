@@ -12,6 +12,8 @@
 #define RIGHT_BUTTON_LED GPIO_NUM_23
 #define LEFT_FRONT GPIO_NUM_15
 #define RIGHT_FRONT GPIO_NUM_2
+#define POWER_BUTTON GPIO_NUM_4
+#define MAIN_POWER GPIO_NUM_16
 
 Adafruit_NeoPixel leftFront = Adafruit_NeoPixel(36, LEFT_FRONT, NEO_GRBW + NEO_KHZ800);
 Adafruit_NeoPixel rightFront = Adafruit_NeoPixel(36, RIGHT_FRONT, NEO_GRBW + NEO_KHZ800);
@@ -71,6 +73,8 @@ void WiFiStationDisconnected(WiFiEvent_t event, WiFiEventInfo_t info) {
 void setup()
 {
   Serial.begin(921600);
+  pinMode(MAIN_POWER, OUTPUT);
+  digitalWrite(MAIN_POWER, HIGH);
   leftFront.begin();
   leftFront.show(); // Initialize all pixels to 'off'
   rightFront.begin();
@@ -121,12 +125,20 @@ void setup()
   }
 
   Serial.println("Connected to wifi");
-
-  delay(300);
+  pinMode(POWER_BUTTON, INPUT_PULLDOWN);
+  esp_sleep_enable_ext0_wakeup(GPIO_NUM_4, 1);
+  delay(500);
   WakeUp();
 }
 void loop() // run over and over
 {
+    int power;
+    power = digitalRead(POWER_BUTTON);
+    if (power == 1) {
+        digitalWrite(MAIN_POWER, LOW);
+        esp_deep_sleep_start();
+    }
+
   unsigned long now = millis();
   if (now > lastSend + sendDelay) {
       /*if ((WiFi.status() != WL_CONNECTED)) {

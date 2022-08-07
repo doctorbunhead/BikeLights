@@ -49,7 +49,10 @@ const int disableForTestingAddress = 20;
 
 #define LEFT_REAR GPIO_NUM_15
 #define RIGHT_REAR GPIO_NUM_2
-#define INTERRUPT_PIN GPIO_NUM_23  // use pin 2 on Arduino Uno & most boards
+#define INTERRUPT_PIN GPIO_NUM_13  // use pin 2 on Arduino Uno & most boards
+#define POWER_BUTTON GPIO_NUM_4
+#define MAIN_POWER GPIO_NUM_16
+
 Adafruit_NeoPixel leftRear = Adafruit_NeoPixel(36, LEFT_REAR, NEO_GRB + NEO_KHZ800);
 Adafruit_NeoPixel rightRear = Adafruit_NeoPixel(36, RIGHT_REAR, NEO_GRB + NEO_KHZ800);
 unsigned long microsIndicate = 0;
@@ -64,7 +67,9 @@ const float GRAVITY = 9.80665f;
 
 void setup() {
 	Serial.begin(921600);
-	
+	pinMode(MAIN_POWER, OUTPUT);
+	digitalWrite(MAIN_POWER, HIGH);
+
 	SerialBT.begin("RearMod");
 	tcpip_adapter_init();
 
@@ -84,7 +89,6 @@ void setup() {
 			});
 	}
 
-	
 	inputString.reserve(200);
 	EEPROM.get(thresholdAddress, thresholdValue);
 	EEPROM.get(brakeTimeAddress, brakeTime);
@@ -116,7 +120,7 @@ void setup() {
 	if (devStatus) {
 		// turn on the DMP, now that it's ready
 		SerialBT.println(F("Found MPU"));
-		
+
 		//attachInterrupt(digitalPinToInterrupt(INTERRUPT_PIN), dmpDataReady, RISING);
 		mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
 		mpu.setGyroRange(MPU6050_RANGE_500_DEG);
@@ -127,12 +131,22 @@ void setup() {
 		SerialBT.print(devStatus);
 		SerialBT.println(F(")"));
 	}
+	pinMode(POWER_BUTTON, INPUT_PULLDOWN);
+	esp_sleep_enable_ext0_wakeup(GPIO_NUM_4, 1);
+	delay(500);
+
 	WakeUp();
 }
 
 void loop()
 {
 	MpuRoutine();
+	int power;
+	power = digitalRead(POWER_BUTTON);
+	if (power == 1) {
+		digitalWrite(MAIN_POWER, LOW);
+		esp_deep_sleep_start();
+	}
 
 	if (SerialBT.available() > 0) BluetoothRoutine();
 
@@ -242,7 +256,6 @@ void MpuRoutine() {
 	accelY.push(a.acceleration.y);
 	accelZ.push(a.acceleration.z);
 
-
 	float avgX = 0.0;
 	// the following ensures using the right type for the index variable
 	using index_t = decltype(accelX)::index_t;
@@ -269,7 +282,6 @@ void MpuRoutine() {
 	float sumSquares = squares - gsquare;
 	//if (sumSquares < 0) sumSquares = -sumSquares;
 	accelNorm = sqrtf(sumSquares);
-
 
 	if (logging) {
 		SerialBT.print("avgX");
@@ -575,7 +587,7 @@ void UpdatePixels() {
 
 void SetStatus(String statString) {
 	Serial.println("GOT DATA");
-	
+
 	Serial.println(statString);
 	if (statString.length() < UNIQUE_KEY.length() + 1) return;
 	char inCommand = statString[statString.length() - 1];

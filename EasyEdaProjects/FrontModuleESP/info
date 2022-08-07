@@ -4,7 +4,7 @@
   "name": "FrontModuleESP",
   "content": "",
   "created_at": "2022-05-10 11:22:19",
-  "updated_at": "2022-07-28 12:40:18",
+  "updated_at": "2022-08-07 10:10:39",
   "stick": "",
   "documents": [
     {
@@ -15,10 +15,12 @@
       "master": "",
       "thumb": "/images/thumb-default.png",
       "components": {
-        "3d81358d1cf644cfbc260df0c855f95f": 4,
+        "3d81358d1cf644cfbc260df0c855f95f": 5,
         "0184cd15b188469cbfcbc417114696a7": 1,
         "22c595a555e74b31bd74c1490eb4373f": 2,
-        "fc7da4bb17ec4d00b8aa210ee11b03e2": 1
+        "663811b867c343fbb58ffdccf22fef08": 4,
+        "f80e29816fd30bb295222fb4f47bcc25": 2,
+        "7f28ed3628ec44469fc66d5d3fd11b6d": 1
       },
       "BOM": [
         [
@@ -29,13 +31,14 @@
           "CustomPara"
         ],
         [
-          "1000uF",
+          "ESP32DEVKITV1",
           1,
-          "CP_RADIAL_D8.0MM_P3.50MM",
-          "C1",
+          "ESP32-DEVKITV1",
+          "BOARD1",
           {
-            "puuid": "427b198b58d04b2a9d7ee0adb963c919",
-            "uuid": ""
+            "BOM_Manufacturer Part": "",
+            "puuid": "f96f983f392e4b32a4e75a4caf282a4a",
+            "uuid": "7f28ed3628ec44469fc66d5d3fd11b6d"
           }
         ],
         [
@@ -54,10 +57,20 @@
           }
         ],
         [
+          "1000uF",
+          1,
+          "CP_RADIAL_D8.0MM_P3.50MM",
+          "C5",
+          {
+            "puuid": "427b198b58d04b2a9d7ee0adb963c919",
+            "uuid": ""
+          }
+        ],
+        [
           "MKDS3/2-5.08",
-          4,
+          5,
           "CONN-TH_MKDS3-2-5.08",
-          "CN1,CN2,CN3,CN5",
+          "CN1,CN2,CN3,CN4,CN5",
           {
             "BOM_Supplier": "LCSC",
             "BOM_Manufacturer": "Phoenix Contact",
@@ -69,6 +82,21 @@
           }
         ],
         [
+          "AO3400A",
+          2,
+          "SOT-23-3_L2.9-W1.6-P1.90-LS2.8-BR",
+          "Q1,Q2",
+          {
+            "BOM_Supplier": "LCSC",
+            "BOM_Manufacturer": "AOS",
+            "BOM_Manufacturer Part": "AO3400A",
+            "BOM_Supplier Part": "C20917",
+            "BOM_JLCPCB Part Class": "Basic Part",
+            "puuid": "b3b82869fa924bae820e3a6cfb44d689",
+            "uuid": "f80e29816fd30bb295222fb4f47bcc25"
+          }
+        ],
+        [
           "300R",
           2,
           "R_0805",
@@ -76,6 +104,34 @@
           {
             "puuid": "f5f9872c4c40453096226f8cd1a9027d",
             "uuid": ""
+          }
+        ],
+        [
+          "10k",
+          3,
+          "R0805",
+          "R3,R4,R5",
+          {
+            "BOM_Supplier": "LCSC",
+            "BOM_Supplier Part": "C365284",
+            "BOM_Manufacturer": "ResistorToday",
+            "BOM_Manufacturer Part": "HPCR0805F300RK9",
+            "puuid": "b60f399a7a7e41848b2be1eb49c79141",
+            "uuid": "663811b867c343fbb58ffdccf22fef08"
+          }
+        ],
+        [
+          "100R",
+          1,
+          "R0805",
+          "R6",
+          {
+            "BOM_Supplier": "LCSC",
+            "BOM_Supplier Part": "C365284",
+            "BOM_Manufacturer": "ResistorToday",
+            "BOM_Manufacturer Part": "HPCR0805F300RK9",
+            "puuid": "b60f399a7a7e41848b2be1eb49c79141",
+            "uuid": "663811b867c343fbb58ffdccf22fef08"
           }
         ],
         [
@@ -91,27 +147,13 @@
             "puuid": "1586800a83194e228c6527ad76c86945",
             "uuid": "0184cd15b188469cbfcbc417114696a7"
           }
-        ],
-        [
-          "ESP32-DEVKITV1-38PIN SIMPLE",
-          1,
-          "ESP32-DEVKIT-V1.0-38PIN-PCB",
-          "U2",
-          {
-            "BOM_Manufacturer": "espressif",
-            "BOM_Manufacturer Part": "ESP-WROOM-32",
-            "BOM_Supplier Part": "",
-            "BOM_Supplier": "Aliexpress",
-            "puuid": "7f0d9c4bc2e14c11a8e8972af870a4ec",
-            "uuid": "fc7da4bb17ec4d00b8aa210ee11b03e2"
-          }
         ]
       ],
-      "updateTime": 1659008370,
+      "updateTime": 1659861137,
       "createTime": 1652178139,
       "histories": [],
       "created_at": "2022-05-10 11:22:19",
-      "updated_at": "2022-07-28 12:39:30"
+      "updated_at": "2022-08-07 09:32:17"
     },
     {
       "uuid": "a69b1e8c2617d538b10d740b731a38ba",
@@ -123,24 +165,26 @@
       "master": "",
       "thumb": "/images/thumb-default.png",
       "components": {
-        "427b198b58d04b2a9d7ee0adb963c919": 1,
-        "e33f49e2b3194cdf8041c0deed8e9f8f": 4,
+        "f96f983f392e4b32a4e75a4caf282a4a": 1,
+        "b3b82869fa924bae820e3a6cfb44d689": 2,
+        "b60f399a7a7e41848b2be1eb49c79141": 4,
+        "f5f9872c4c40453096226f8cd1a9027d": 2,
         "1586800a83194e228c6527ad76c86945": 1,
         "2ee8eb13a0124a108e622ce40c0c25a8": 2,
-        "7f0d9c4bc2e14c11a8e8972af870a4ec": 1,
-        "f5f9872c4c40453096226f8cd1a9027d": 2
+        "e33f49e2b3194cdf8041c0deed8e9f8f": 5,
+        "427b198b58d04b2a9d7ee0adb963c919": 1
       },
       "BOM": [],
-      "updateTime": 1659008418,
+      "updateTime": 1659863439,
       "createTime": 1657470190,
       "histories": [],
       "created_at": "2022-07-10 17:23:10",
-      "updated_at": "2022-07-28 12:40:18"
+      "updated_at": "2022-08-07 10:10:39"
     }
   ],
   "sort": [],
   "title": "FrontModuleESP",
   "foldername": "FrontModuleESP",
   "schfilename": "FrontModuleESP.json",
-  "schfilemtime": 1659008370780
+  "schfilemtime": 1659861137236
 }
