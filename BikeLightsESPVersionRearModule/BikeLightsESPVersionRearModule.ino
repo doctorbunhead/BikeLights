@@ -143,11 +143,7 @@ void loop()
 	MpuRoutine();
 	int power;
 	power = digitalRead(POWER_BUTTON);
-	if (power == 1) {
-		digitalWrite(MAIN_POWER, LOW);
-		delay(1000);
-		esp_deep_sleep_start();
-	}
+	if (power == 1) GoToSleep(); 
 
 	if (SerialBT.available() > 0) BluetoothRoutine();
 
@@ -594,7 +590,14 @@ void SetStatus(String statString) {
 	char inCommand = statString[statString.length() - 1];
 	strStatus = String(inCommand);
 	Serial.println(inCommand);
+	if (inCommand == 'O') GoToSleep();
 	//SerialBT.println(strStatus);
 	//char* buffer;
 	//Serial1.readBytes(buffer, Serial1.available());
+}
+
+void GoToSleep() {
+	digitalWrite(MAIN_POWER, LOW);
+	delay(1000);
+	esp_deep_sleep_start();
 }

@@ -1,9 +1,6 @@
-
 #include <Adafruit_NeoPixel.h>
 #include <WiFi.h>
-
 #include <AutoConnect.h>
-
 #include <AsyncUDP.h>
 
 #define LEFT_BUTTON GPIO_NUM_25
@@ -64,8 +61,6 @@ void WiFiGotIP(WiFiEvent_t event, WiFiEventInfo_t info) {
 
 void WiFiStationDisconnected(WiFiEvent_t event, WiFiEventInfo_t info) {
     Serial.println("Disconnected from WiFi access point");
-    Serial.print("WiFi lost connection. Reason: ");
-    Serial.println(info.disconnected.reason);
     Serial.println("Trying to Reconnect");
     WiFi.begin(ssid, password);
 }
@@ -99,9 +94,9 @@ void setup()
 
   delay(1000);
 
-  WiFi.onEvent(WiFiStationConnected, SYSTEM_EVENT_STA_CONNECTED);
-  WiFi.onEvent(WiFiGotIP, SYSTEM_EVENT_STA_GOT_IP);
-  WiFi.onEvent(WiFiStationDisconnected, SYSTEM_EVENT_STA_DISCONNECTED);
+  WiFi.onEvent(WiFiStationConnected, ARDUINO_EVENT_WIFI_STA_CONNECTED);
+  WiFi.onEvent(WiFiGotIP, ARDUINO_EVENT_WIFI_STA_GOT_IP);
+  WiFi.onEvent(WiFiStationDisconnected, ARDUINO_EVENT_WIFI_STA_DISCONNECTED);
 
 
   WiFi.begin(ssid, password);
@@ -136,6 +131,9 @@ void loop() // run over and over
     power = digitalRead(POWER_BUTTON);
     if (power == 1) {
         digitalWrite(MAIN_POWER, LOW);
+        strStatus = "O";
+        SendStatus();
+        delay(1000);
         esp_deep_sleep_start();
     }
 
