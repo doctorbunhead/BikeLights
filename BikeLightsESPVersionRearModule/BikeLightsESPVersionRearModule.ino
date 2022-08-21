@@ -145,6 +145,7 @@ void loop()
 	power = digitalRead(POWER_BUTTON);
 	if (power == 1) {
 		digitalWrite(MAIN_POWER, LOW);
+		delay(1000);
 		esp_deep_sleep_start();
 	}
 
