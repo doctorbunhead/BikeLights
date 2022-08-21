@@ -4,7 +4,7 @@
   "name": "FrontModuleESP",
   "content": "",
   "created_at": "2022-05-10 11:22:19",
-  "updated_at": "2022-08-07 10:10:39",
+  "updated_at": "2022-08-21 10:18:38",
   "stick": "",
   "documents": [
     {
@@ -15,10 +15,10 @@
       "master": "",
       "thumb": "/images/thumb-default.png",
       "components": {
-        "3d81358d1cf644cfbc260df0c855f95f": 5,
+        "3d81358d1cf644cfbc260df0c855f95f": 6,
         "0184cd15b188469cbfcbc417114696a7": 1,
         "22c595a555e74b31bd74c1490eb4373f": 2,
-        "663811b867c343fbb58ffdccf22fef08": 4,
+        "663811b867c343fbb58ffdccf22fef08": 3,
         "f80e29816fd30bb295222fb4f47bcc25": 2,
         "7f28ed3628ec44469fc66d5d3fd11b6d": 1
       },
@@ -68,9 +68,9 @@
         ],
         [
           "MKDS3/2-5.08",
-          5,
+          6,
           "CONN-TH_MKDS3-2-5.08",
-          "CN1,CN2,CN3,CN4,CN5",
+          "CN1,CN2,CN3,CN4,CN5,CN6",
           {
             "BOM_Supplier": "LCSC",
             "BOM_Manufacturer": "Phoenix Contact",
@@ -108,9 +108,9 @@
         ],
         [
           "10k",
-          3,
+          2,
           "R0805",
-          "R3,R4,R5",
+          "R4,R5",
           {
             "BOM_Supplier": "LCSC",
             "BOM_Supplier Part": "C365284",
@@ -121,7 +121,7 @@
           }
         ],
         [
-          "100R",
+          "10R",
           1,
           "R0805",
           "R6",
@@ -149,11 +149,11 @@
           }
         ]
       ],
-      "updateTime": 1659861137,
+      "updateTime": 1661071035,
       "createTime": 1652178139,
       "histories": [],
       "created_at": "2022-05-10 11:22:19",
-      "updated_at": "2022-08-07 09:32:17"
+      "updated_at": "2022-08-21 09:37:15"
     },
     {
       "uuid": "a69b1e8c2617d538b10d740b731a38ba",
@@ -165,26 +165,26 @@
       "master": "",
       "thumb": "/images/thumb-default.png",
       "components": {
-        "f96f983f392e4b32a4e75a4caf282a4a": 1,
-        "b3b82869fa924bae820e3a6cfb44d689": 2,
-        "b60f399a7a7e41848b2be1eb49c79141": 4,
+        "b60f399a7a7e41848b2be1eb49c79141": 3,
         "f5f9872c4c40453096226f8cd1a9027d": 2,
         "1586800a83194e228c6527ad76c86945": 1,
         "2ee8eb13a0124a108e622ce40c0c25a8": 2,
-        "e33f49e2b3194cdf8041c0deed8e9f8f": 5,
+        "f96f983f392e4b32a4e75a4caf282a4a": 1,
+        "b3b82869fa924bae820e3a6cfb44d689": 2,
+        "e33f49e2b3194cdf8041c0deed8e9f8f": 6,
         "427b198b58d04b2a9d7ee0adb963c919": 1
       },
       "BOM": [],
-      "updateTime": 1659863439,
+      "updateTime": 1661073518,
       "createTime": 1657470190,
       "histories": [],
       "created_at": "2022-07-10 17:23:10",
-      "updated_at": "2022-08-07 10:10:39"
+      "updated_at": "2022-08-21 10:18:38"
     }
   ],
   "sort": [],
   "title": "FrontModuleESP",
   "foldername": "FrontModuleESP",
   "schfilename": "FrontModuleESP.json",
-  "schfilemtime": 1659861137236
+  "schfilemtime": 1661071035485
 }
