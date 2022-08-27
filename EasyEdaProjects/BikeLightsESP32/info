@@ -4,7 +4,7 @@
   "name": "BikeLightsESP32",
   "content": "",
   "created_at": "2022-03-12 14:36:56",
-  "updated_at": "2022-08-21 10:18:41",
+  "updated_at": "2022-08-27 14:25:09",
   "stick": "",
   "documents": [
     {
@@ -15,13 +15,13 @@
       "master": "",
       "thumb": "/images/thumb-default.png",
       "components": {
-        "3d81358d1cf644cfbc260df0c855f95f": 4,
-        "663811b867c343fbb58ffdccf22fef08": 5,
+        "3d81358d1cf644cfbc260df0c855f95f": 3,
+        "663811b867c343fbb58ffdccf22fef08": 3,
         "a0a27df1bc354b718ab2a1fb290dfab8": 1,
         "0184cd15b188469cbfcbc417114696a7": 1,
         "22c595a555e74b31bd74c1490eb4373f": 2,
         "7f28ed3628ec44469fc66d5d3fd11b6d": 1,
-        "f80e29816fd30bb295222fb4f47bcc25": 2
+        "1cce7afe3a334bcc85839c41ecc64a80": 1
       },
       "BOM": [
         [
@@ -69,9 +69,9 @@
         ],
         [
           "MKDS3/2-5.08",
-          4,
+          3,
           "CONN-TH_MKDS3-2-5.08",
-          "CN1,CN2,CN3,CN4",
+          "CN1,CN2,CN3",
           {
             "BOM_Supplier": "LCSC",
             "BOM_Manufacturer": "Phoenix Contact",
@@ -80,6 +80,19 @@
             "BOM_JLCPCB Part Class": "Extended Part",
             "puuid": "e33f49e2b3194cdf8041c0deed8e9f8f",
             "uuid": "3d81358d1cf644cfbc260df0c855f95f"
+          }
+        ],
+        [
+          "Header-Male-2.54_1x04",
+          1,
+          "HDR-TH_04P-P2.54-V",
+          "H1",
+          {
+            "BOM_Supplier Part": "",
+            "BOM_Supplier": "",
+            "BOM_Manufacturer Part": "",
+            "puuid": "999c165c7291456fa9427838bc5f7b12",
+            "uuid": "1cce7afe3a334bcc85839c41ecc64a80"
           }
         ],
         [
@@ -94,18 +107,17 @@
           }
         ],
         [
-          "AO3400A",
-          2,
-          "SOT-23-3_L2.9-W1.6-P1.90-LS2.8-BR",
-          "Q1,Q2",
+          "100K",
+          1,
+          "R0805",
+          "R1",
           {
             "BOM_Supplier": "LCSC",
-            "BOM_Manufacturer": "AOS",
-            "BOM_Manufacturer Part": "AO3400A",
-            "BOM_Supplier Part": "C20917",
-            "BOM_JLCPCB Part Class": "Basic Part",
-            "puuid": "b3b82869fa924bae820e3a6cfb44d689",
-            "uuid": "f80e29816fd30bb295222fb4f47bcc25"
+            "BOM_Supplier Part": "C365284",
+            "BOM_Manufacturer": "ResistorToday",
+            "BOM_Manufacturer Part": "HPCR0805F300RK9",
+            "puuid": "b60f399a7a7e41848b2be1eb49c79141",
+            "uuid": "663811b867c343fbb58ffdccf22fef08"
           }
         ],
         [
@@ -113,34 +125,6 @@
           2,
           "R0805",
           "R2,R3",
-          {
-            "BOM_Supplier": "LCSC",
-            "BOM_Supplier Part": "C365284",
-            "BOM_Manufacturer": "ResistorToday",
-            "BOM_Manufacturer Part": "HPCR0805F300RK9",
-            "puuid": "b60f399a7a7e41848b2be1eb49c79141",
-            "uuid": "663811b867c343fbb58ffdccf22fef08"
-          }
-        ],
-        [
-          "10k",
-          2,
-          "R0805",
-          "R4,R5",
-          {
-            "BOM_Supplier": "LCSC",
-            "BOM_Supplier Part": "C365284",
-            "BOM_Manufacturer": "ResistorToday",
-            "BOM_Manufacturer Part": "HPCR0805F300RK9",
-            "puuid": "b60f399a7a7e41848b2be1eb49c79141",
-            "uuid": "663811b867c343fbb58ffdccf22fef08"
-          }
-        ],
-        [
-          "10R",
-          1,
-          "R0805",
-          "R6",
           {
             "BOM_Supplier": "LCSC",
             "BOM_Supplier Part": "C365284",
@@ -165,11 +149,11 @@
           }
         ]
       ],
-      "updateTime": 1661071033,
+      "updateTime": 1661606618,
       "createTime": 1647095817,
       "histories": [],
       "created_at": "2022-03-12 14:36:57",
-      "updated_at": "2022-08-21 09:37:13"
+      "updated_at": "2022-08-27 14:23:38"
     },
     {
       "uuid": "65e4a170e7693d447716a9d8f95eea7b",
@@ -181,26 +165,26 @@
       "master": "",
       "thumb": "/images/thumb-default.png",
       "components": {
-        "e33f49e2b3194cdf8041c0deed8e9f8f": 4,
+        "e33f49e2b3194cdf8041c0deed8e9f8f": 3,
         "427b198b58d04b2a9d7ee0adb963c919": 1,
         "4b643072e9ee432a92d431124506085a": 1,
-        "b3b82869fa924bae820e3a6cfb44d689": 2,
-        "b60f399a7a7e41848b2be1eb49c79141": 5,
+        "b60f399a7a7e41848b2be1eb49c79141": 3,
+        "999c165c7291456fa9427838bc5f7b12": 1,
         "f96f983f392e4b32a4e75a4caf282a4a": 1,
         "2ee8eb13a0124a108e622ce40c0c25a8": 2,
         "1586800a83194e228c6527ad76c86945": 1
       },
       "BOM": [],
-      "updateTime": 1661073521,
+      "updateTime": 1661606709,
       "createTime": 1647208512,
       "histories": [],
       "created_at": "2022-03-13 21:55:12",
-      "updated_at": "2022-08-21 10:18:41"
+      "updated_at": "2022-08-27 14:25:09"
     }
   ],
   "sort": [],
   "title": "BikeLightsESP32",
   "foldername": "BikeLightsESP32",
   "schfilename": "BikeLightsESP32.json",
-  "schfilemtime": 1661071033287
+  "schfilemtime": 1661606618783
 }
