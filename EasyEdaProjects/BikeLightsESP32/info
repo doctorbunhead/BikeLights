@@ -4,7 +4,7 @@
   "name": "BikeLightsESP32",
   "content": "",
   "created_at": "2022-03-12 14:36:56",
-  "updated_at": "2022-08-27 14:25:09",
+  "updated_at": "2022-09-30 07:55:47",
   "stick": "",
   "documents": [
     {
@@ -21,7 +21,7 @@
         "0184cd15b188469cbfcbc417114696a7": 1,
         "22c595a555e74b31bd74c1490eb4373f": 2,
         "7f28ed3628ec44469fc66d5d3fd11b6d": 1,
-        "1cce7afe3a334bcc85839c41ecc64a80": 1
+        "c3f8b41cf1bd4f0d9ac5cfcda4d12b60": 1
       },
       "BOM": [
         [
@@ -83,16 +83,18 @@
           }
         ],
         [
-          "Header-Male-2.54_1x04",
+          "MKDS3/3-5.08",
           1,
-          "HDR-TH_04P-P2.54-V",
-          "H1",
+          "CONN-TH_3P-P5.08_1711738",
+          "CN5",
           {
-            "BOM_Supplier Part": "",
-            "BOM_Supplier": "",
-            "BOM_Manufacturer Part": "",
-            "puuid": "999c165c7291456fa9427838bc5f7b12",
-            "uuid": "1cce7afe3a334bcc85839c41ecc64a80"
+            "BOM_Supplier": "LCSC",
+            "BOM_Manufacturer": "Phoenix Contact",
+            "BOM_Manufacturer Part": "MKDS3/3-5.08",
+            "BOM_Supplier Part": "C91156",
+            "BOM_JLCPCB Part Class": "Extended Part",
+            "puuid": "5f8a2bde8eba497bb43588f395120af9",
+            "uuid": "c3f8b41cf1bd4f0d9ac5cfcda4d12b60"
           }
         ],
         [
@@ -107,7 +109,7 @@
           }
         ],
         [
-          "100K",
+          "10K",
           1,
           "R0805",
           "R1",
@@ -149,11 +151,11 @@
           }
         ]
       ],
-      "updateTime": 1661606618,
+      "updateTime": 1664520929,
       "createTime": 1647095817,
       "histories": [],
       "created_at": "2022-03-12 14:36:57",
-      "updated_at": "2022-08-27 14:23:38"
+      "updated_at": "2022-09-30 07:55:29"
     },
     {
       "uuid": "65e4a170e7693d447716a9d8f95eea7b",
@@ -165,26 +167,26 @@
       "master": "",
       "thumb": "/images/thumb-default.png",
       "components": {
+        "5f8a2bde8eba497bb43588f395120af9": 1,
+        "b60f399a7a7e41848b2be1eb49c79141": 3,
         "e33f49e2b3194cdf8041c0deed8e9f8f": 3,
         "427b198b58d04b2a9d7ee0adb963c919": 1,
         "4b643072e9ee432a92d431124506085a": 1,
-        "b60f399a7a7e41848b2be1eb49c79141": 3,
-        "999c165c7291456fa9427838bc5f7b12": 1,
         "f96f983f392e4b32a4e75a4caf282a4a": 1,
         "2ee8eb13a0124a108e622ce40c0c25a8": 2,
         "1586800a83194e228c6527ad76c86945": 1
       },
       "BOM": [],
-      "updateTime": 1661606709,
+      "updateTime": 1664520947,
       "createTime": 1647208512,
       "histories": [],
       "created_at": "2022-03-13 21:55:12",
-      "updated_at": "2022-08-27 14:25:09"
+      "updated_at": "2022-09-30 07:55:47"
     }
   ],
   "sort": [],
   "title": "BikeLightsESP32",
   "foldername": "BikeLightsESP32",
   "schfilename": "BikeLightsESP32.json",
-  "schfilemtime": 1661606618783
+  "schfilemtime": 1664520929595
 }

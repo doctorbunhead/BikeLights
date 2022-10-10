@@ -4,7 +4,7 @@
   "name": "FrontModuleESP",
   "content": "",
   "created_at": "2022-05-10 11:22:19",
-  "updated_at": "2022-08-21 10:18:38",
+  "updated_at": "2022-09-30 07:55:20",
   "stick": "",
   "documents": [
     {
@@ -15,12 +15,12 @@
       "master": "",
       "thumb": "/images/thumb-default.png",
       "components": {
-        "3d81358d1cf644cfbc260df0c855f95f": 6,
+        "3d81358d1cf644cfbc260df0c855f95f": 5,
         "0184cd15b188469cbfcbc417114696a7": 1,
         "22c595a555e74b31bd74c1490eb4373f": 2,
-        "663811b867c343fbb58ffdccf22fef08": 3,
-        "f80e29816fd30bb295222fb4f47bcc25": 2,
-        "7f28ed3628ec44469fc66d5d3fd11b6d": 1
+        "7f28ed3628ec44469fc66d5d3fd11b6d": 1,
+        "c3f8b41cf1bd4f0d9ac5cfcda4d12b60": 1,
+        "663811b867c343fbb58ffdccf22fef08": 1
       },
       "BOM": [
         [
@@ -68,9 +68,9 @@
         ],
         [
           "MKDS3/2-5.08",
-          6,
+          5,
           "CONN-TH_MKDS3-2-5.08",
-          "CN1,CN2,CN3,CN4,CN5,CN6",
+          "CN1,CN2,CN4,CN5,CN6",
           {
             "BOM_Supplier": "LCSC",
             "BOM_Manufacturer": "Phoenix Contact",
@@ -82,18 +82,18 @@
           }
         ],
         [
-          "AO3400A",
-          2,
-          "SOT-23-3_L2.9-W1.6-P1.90-LS2.8-BR",
-          "Q1,Q2",
+          "MKDS3/3-5.08",
+          1,
+          "CONN-TH_3P-P5.08_1711738",
+          "CN8",
           {
             "BOM_Supplier": "LCSC",
-            "BOM_Manufacturer": "AOS",
-            "BOM_Manufacturer Part": "AO3400A",
-            "BOM_Supplier Part": "C20917",
-            "BOM_JLCPCB Part Class": "Basic Part",
-            "puuid": "b3b82869fa924bae820e3a6cfb44d689",
-            "uuid": "f80e29816fd30bb295222fb4f47bcc25"
+            "BOM_Manufacturer": "Phoenix Contact",
+            "BOM_Manufacturer Part": "MKDS3/3-5.08",
+            "BOM_Supplier Part": "C91156",
+            "BOM_JLCPCB Part Class": "Extended Part",
+            "puuid": "5f8a2bde8eba497bb43588f395120af9",
+            "uuid": "c3f8b41cf1bd4f0d9ac5cfcda4d12b60"
           }
         ],
         [
@@ -107,24 +107,10 @@
           }
         ],
         [
-          "10k",
-          2,
-          "R0805",
-          "R4,R5",
-          {
-            "BOM_Supplier": "LCSC",
-            "BOM_Supplier Part": "C365284",
-            "BOM_Manufacturer": "ResistorToday",
-            "BOM_Manufacturer Part": "HPCR0805F300RK9",
-            "puuid": "b60f399a7a7e41848b2be1eb49c79141",
-            "uuid": "663811b867c343fbb58ffdccf22fef08"
-          }
-        ],
-        [
-          "10R",
+          "10K",
           1,
           "R0805",
-          "R6",
+          "R4",
           {
             "BOM_Supplier": "LCSC",
             "BOM_Supplier Part": "C365284",
@@ -149,11 +135,11 @@
           }
         ]
       ],
-      "updateTime": 1661071035,
+      "updateTime": 1664520849,
       "createTime": 1652178139,
       "histories": [],
       "created_at": "2022-05-10 11:22:19",
-      "updated_at": "2022-08-21 09:37:15"
+      "updated_at": "2022-09-30 07:54:09"
     },
     {
       "uuid": "a69b1e8c2617d538b10d740b731a38ba",
@@ -165,26 +151,26 @@
       "master": "",
       "thumb": "/images/thumb-default.png",
       "components": {
-        "b60f399a7a7e41848b2be1eb49c79141": 3,
-        "f5f9872c4c40453096226f8cd1a9027d": 2,
-        "1586800a83194e228c6527ad76c86945": 1,
         "2ee8eb13a0124a108e622ce40c0c25a8": 2,
+        "b60f399a7a7e41848b2be1eb49c79141": 1,
+        "1586800a83194e228c6527ad76c86945": 1,
         "f96f983f392e4b32a4e75a4caf282a4a": 1,
-        "b3b82869fa924bae820e3a6cfb44d689": 2,
-        "e33f49e2b3194cdf8041c0deed8e9f8f": 6,
+        "f5f9872c4c40453096226f8cd1a9027d": 2,
+        "e33f49e2b3194cdf8041c0deed8e9f8f": 5,
+        "5f8a2bde8eba497bb43588f395120af9": 1,
         "427b198b58d04b2a9d7ee0adb963c919": 1
       },
       "BOM": [],
-      "updateTime": 1661073518,
+      "updateTime": 1664520920,
       "createTime": 1657470190,
       "histories": [],
       "created_at": "2022-07-10 17:23:10",
-      "updated_at": "2022-08-21 10:18:38"
+      "updated_at": "2022-09-30 07:55:20"
     }
   ],
   "sort": [],
   "title": "FrontModuleESP",
   "foldername": "FrontModuleESP",
   "schfilename": "FrontModuleESP.json",
-  "schfilemtime": 1661071035485
+  "schfilemtime": 1664520849534
 }

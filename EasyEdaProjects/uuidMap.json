@@ -4,11 +4,5 @@
   "65e4a170e7693d447716a9d8f95eea7b": "BikeLightsESP32\\PCB_BikeLightsESP32.json",
   "cbd3a3009e7fad39c0b69144153ef35a": "FrontModuleESP",
   "703a8f524ba3857eff0851394d97d145": "FrontModuleESP\\FrontModuleESP.json?FrontModule",
-  "a69b1e8c2617d538b10d740b731a38ba": "FrontModuleESP\\PCB_FrontModuleESP.json",
-  "c334dcec5ec9cca9f7f32985e1434e44": "FrontModuleNew",
-  "1eeb9db0313ad85386b2add21ec9ed3d": "FrontModuleNew\\FrontModuleNew.json?FrontModule/FrontModule",
-  "df7ce1d9b6a4a55173ecc1eb6b602485": "FrontModuleNew\\PCB_FrontModuleNew.json",
-  "6aa3a2e6480e67f56891b732f2942363": "RearModule",
-  "6168f3290ec0aa97a1dd86db8ca96bdc": "RearModule\\RearModule.json?RearLightsModule",
-  "6594fe4ccccc35b3d6a98ce1fca1961c": "RearModule\\PCB_RearModule.json"
+  "a69b1e8c2617d538b10d740b731a38ba": "FrontModuleESP\\PCB_FrontModuleESP.json"
 }

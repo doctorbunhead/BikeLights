@@ -51,7 +51,8 @@ const int disableForTestingAddress = 20;
 #define RIGHT_REAR GPIO_NUM_2
 #define INTERRUPT_PIN GPIO_NUM_13  // use pin 2 on Arduino Uno & most boards
 #define POWER_BUTTON GPIO_NUM_4
-#define MAIN_POWER GPIO_NUM_16
+#define MPU_POWER GPIO_NUM_16
+#define LED_POWER GPIO_NUM_17
 
 Adafruit_NeoPixel leftRear = Adafruit_NeoPixel(36, LEFT_REAR, NEO_GRB + NEO_KHZ800);
 Adafruit_NeoPixel rightRear = Adafruit_NeoPixel(36, RIGHT_REAR, NEO_GRB + NEO_KHZ800);
@@ -67,8 +68,10 @@ const float GRAVITY = 9.80665f;
 
 void setup() {
 	Serial.begin(921600);
-	pinMode(MAIN_POWER, OUTPUT);
-	digitalWrite(MAIN_POWER, HIGH);
+	pinMode(MPU_POWER, OUTPUT);
+	pinMode(LED_POWER, OUTPUT);
+	digitalWrite(MPU_POWER, HIGH);
+	digitalWrite(LED_POWER, LOW);
 
 	SerialBT.begin("RearMod");
 	tcpip_adapter_init();
@@ -597,7 +600,8 @@ void SetStatus(String statString) {
 }
 
 void GoToSleep() {
-	digitalWrite(MAIN_POWER, LOW);
+	digitalWrite(MPU_POWER, LOW);
+	digitalWrite(LED_POWER, HIGH);
 	delay(1000);
 	esp_deep_sleep_start();
 }
