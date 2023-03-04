@@ -1,0 +1,55 @@
+{
+  "uuid": "2cf9179cf9bee350cbfb1c0ddd75a1bd",
+  "path": "Offline/sadfsafasdfdf",
+  "name": "sadfsafasdfdf",
+  "content": "",
+  "created_at": "2022-10-31 16:49:45",
+  "updated_at": "2022-10-31 17:12:45",
+  "stick": "",
+  "documents": [
+    {
+      "uuid": "dbd3510cb5d0fba2660933f80aeb7f18",
+      "title": "Sheet_1",
+      "description": "",
+      "docType": "1",
+      "master": "",
+      "thumb": "/images/thumb-default.png",
+      "components": {
+        "67082a4ee642ac71e2dcdf6758d8dd66": 8
+      },
+      "BOM": [
+        [
+          "Value",
+          "Quantity",
+          "Package",
+          "Components",
+          "CustomPara"
+        ],
+        [
+          "CR1220-2",
+          8,
+          "BAT-SMD_CR1220-2",
+          "B1,B2,B3,B4,B5,B6,B7,B8",
+          {
+            "BOM_Supplier": "LCSC",
+            "BOM_Manufacturer": "Q&J",
+            "BOM_Manufacturer Part": "CR1220-2",
+            "BOM_Supplier Part": "C70381",
+            "puuid": "ad4cf9a98ad04c21832cf27a15f0d202",
+            "uuid": "67082a4ee642ac71e2dcdf6758d8dd66"
+          }
+        ]
+      ],
+      "updateTime": 1667236365,
+      "createTime": 1667234986,
+      "histories": [],
+      "created_at": "2022-10-31 16:49:46",
+      "updated_at": "2022-10-31 17:12:45"
+    }
+  ],
+  "sort": [],
+  "title": "sadfsafasdfdf",
+  "foldername": "sadfsafasdfdf",
+  "schfilename": "sadfsafasdfdf.json",
+  "schfilemtime": 1667236365194
+}
